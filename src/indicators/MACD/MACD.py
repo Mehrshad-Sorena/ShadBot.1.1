@@ -521,13 +521,15 @@ class MACD:
 			):
 
 			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
 			if (
 				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary + 1] and
 				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary + 2] and
 				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary - 1] and
 				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary - 2] and
-				dataset_5M_real[symbol]['low'][lst_idx_buy_primary : ] > np.mean(SMA_50[int(signal_buy_primary['index_back'][lst_idx_buy_primary]): lst_idx_buy_primary])
+				dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_primary['index_back'][lst_idx_buy_primary]): ]) and
+				SMA_25.iloc[-1] >= SMA_50.iloc[-1]
 				):
 				print('======> last signal buy primary macd ',symbol)
 				print('dataset length: ',len(dataset_5M[symbol]['close']))
@@ -627,13 +629,15 @@ class MACD:
 			):
 
 			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
 			if (
 				macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry] < macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry + 1] and
 				macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry] < macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry + 2] and
 				macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry] < macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry - 1] and
 				macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry] < macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry - 2] and
-				dataset_5M_real[symbol]['low'][lst_idx_buy_secondry : ] > np.mean(SMA_50[int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]): lst_idx_buy_secondry])
+				dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]): ]) and
+				SMA_25.iloc[-1] >= SMA_50.iloc[-1]
 				):
 				print('======> last signal buy secondry macd ',symbol)
 				print('dataset length: ',len(dataset_5M[symbol]['close']))
@@ -733,13 +737,15 @@ class MACD:
 			):
 
 			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
 			if (
 				macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary] > macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary + 1] and
 				macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary] > macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary + 2] and
 				macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary] > macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary - 1] and
 				macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary] > macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary - 2] and
-				dataset_5M_real[symbol]['high'][lst_idx_sell_primary : ] < np.mean(SMA_50[int(signal_sell_primary['index_back'][lst_idx_sell_primary]): lst_idx_sell_primary])
+				dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_primary['index_back'][lst_idx_sell_primary]): ]) and
+				SMA_25.iloc[-1] <= SMA_50.iloc[-1]
 				):
 				print('======> last signal sell primary macd ',symbol)
 				print('dataset length: ',len(dataset_5M_real[symbol]['close']))
@@ -833,13 +839,15 @@ class MACD:
 			):
 
 			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
 			if (
 				macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry] > macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry + 1] and
 				macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry] > macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry + 2] and
 				macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry] > macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry - 1] and
 				macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry] > macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry - 2] and
-				dataset_5M_real[symbol]['high'][lst_idx_sell_secondry : ] < np.mean(SMA_50[int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]): lst_idx_sell_secondry])
+				dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]): ]) and
+				SMA_25.iloc[-1] <= SMA_50.iloc[-1]
 				):
 
 				print('======> last signal sell secondry macd ',symbol)
