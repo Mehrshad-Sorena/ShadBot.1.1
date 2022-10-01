@@ -1286,7 +1286,7 @@ class MACD:
 				continue
 
 			# if all_chorms >= int(num_turn): break
-			if all_chorms >= 30: break
+			if all_chorms >= 200: break
 			all_chorms += 1
 
 
