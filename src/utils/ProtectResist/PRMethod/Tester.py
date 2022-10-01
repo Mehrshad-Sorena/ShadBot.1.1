@@ -75,8 +75,8 @@ class Tester:
 
 		#////////////////////////////////
 
-		diff_pr_top = (((extereme['high_upper'][loc_end_5M]) - dataset_5M['high'][loc_end_5M_price])/dataset_5M['high'][loc_end_5M_price]) * 100
-		diff_pr_down = ((dataset_5M['low'][loc_end_5M_price] - (extereme['low_lower'][loc_end_5M]))/dataset_5M['low'][loc_end_5M_price]) * 100
+		diff_pr_top = (((extereme['high_upper'][loc_end_5M]) - dataset_5M['high'][loc_end_5M])/dataset_5M['high'][loc_end_5M]) * 100
+		diff_pr_down = ((dataset_5M['low'][loc_end_5M] - (extereme['low_lower'][loc_end_5M]))/dataset_5M['low'][loc_end_5M]) * 100
 
 		# print('top = ', diff_pr_top)
 		# print('down = ', diff_pr_down)
@@ -97,9 +97,9 @@ class Tester:
 
 		if extereme.dropna().empty == True:
 			diff_pr_down = st_percent_min
-			extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M_price] * (1-(st_percent_min/100))
-			extereme['low_mid'][loc_end_5M] = dataset_5M['low'][loc_end_5M_price] * (1-(st_percent_min/100))
-			extereme['low_upper'][loc_end_5M] = dataset_5M['low'][loc_end_5M_price] * (1-(st_percent_min/100))
+			extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M] * (1-(st_percent_min/100))
+			extereme['low_mid'][loc_end_5M] = dataset_5M['low'][loc_end_5M] * (1-(st_percent_min/100))
+			extereme['low_upper'][loc_end_5M] = dataset_5M['low'][loc_end_5M] * (1-(st_percent_min/100))
 
 			extereme['power_low_upper'][loc_end_5M] = 0
 			extereme['power_low_mid'][loc_end_5M] = 0
@@ -107,9 +107,9 @@ class Tester:
 
 
 			diff_pr_top = tp_percent_min
-			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(tp_percent_min/100))
-			extereme['high_mid'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(tp_percent_min/100))
-			extereme['high_lower'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(tp_percent_min/100))
+			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(tp_percent_min/100))
+			extereme['high_mid'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(tp_percent_min/100))
+			extereme['high_lower'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(tp_percent_min/100))
 
 			extereme['power_high_upper'][loc_end_5M] = 0
 			extereme['power_high_mid'][loc_end_5M] = 0
@@ -119,19 +119,19 @@ class Tester:
 		if flaglearn == False:
 			if diff_pr_down < st_percent_min:
 				diff_pr_down = st_percent_min
-				extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M_price] * (1-(st_percent_min/100))
+				extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M] * (1-(st_percent_min/100))
 
 			if diff_pr_top < tp_percent_min:
 				diff_pr_top = tp_percent_min
-				extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(tp_percent_min/100))
+				extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(tp_percent_min/100))
 
 		if diff_pr_down > st_percent_max:
 			diff_pr_down = st_percent_max
-			extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M_price] * (1-(st_percent_max/100))
+			extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M] * (1-(st_percent_max/100))
 		
 		if diff_pr_top > tp_percent_max:
 			diff_pr_top = tp_percent_max
-			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(tp_percent_max/100))
+			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(tp_percent_max/100))
 
 		if (
 			dataset_5M_real['high'][loc_end_5M_price] * (1 + spred) >= extereme['high_upper'][loc_end_5M] or
@@ -424,8 +424,8 @@ class Tester:
 		#////////////////////////////////
 
 
-		diff_pr_top = (((extereme['high_upper'][loc_end_5M]) - dataset_5M['high'][loc_end_5M_price])/dataset_5M['high'][loc_end_5M_price]) * 100
-		diff_pr_down = ((dataset_5M['low'][loc_end_5M_price] - (extereme['low_lower'][loc_end_5M]))/dataset_5M['low'][loc_end_5M_price]) * 100
+		diff_pr_top = (((extereme['high_upper'][loc_end_5M]) - dataset_5M['high'][loc_end_5M])/dataset_5M['high'][loc_end_5M]) * 100
+		diff_pr_down = ((dataset_5M['low'][loc_end_5M] - (extereme['low_lower'][loc_end_5M]))/dataset_5M['low'][loc_end_5M]) * 100
 
 		st_percent_min = self.elements['st_percent_min']
 		st_percent_max = self.elements['st_percent_max']
@@ -437,9 +437,9 @@ class Tester:
 		if extereme.dropna().empty == True:
 
 			diff_pr_top = st_percent_min
-			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(st_percent_min/100))
-			extereme['high_mid'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(st_percent_min/100))
-			extereme['high_lower'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(st_percent_min/100))
+			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(st_percent_min/100))
+			extereme['high_mid'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(st_percent_min/100))
+			extereme['high_lower'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(st_percent_min/100))
 
 			extereme['power_high_upper'][loc_end_5M] = 0
 			extereme['power_high_mid'][loc_end_5M] = 0
@@ -447,9 +447,9 @@ class Tester:
 
 
 			diff_pr_down = tp_percent_min
-			extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M_price] * (1-(tp_percent_min/100))
-			extereme['low_mid'][loc_end_5M] = dataset_5M['low'][loc_end_5M_price] * (1-(tp_percent_min/100))
-			extereme['low_upper'][loc_end_5M] = dataset_5M['low'][loc_end_5M_price] * (1-(tp_percent_min/100))
+			extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M] * (1-(tp_percent_min/100))
+			extereme['low_mid'][loc_end_5M] = dataset_5M['low'][loc_end_5M] * (1-(tp_percent_min/100))
+			extereme['low_upper'][loc_end_5M] = dataset_5M['low'][loc_end_5M] * (1-(tp_percent_min/100))
 
 			extereme['power_low_upper'][loc_end_5M] = 0
 			extereme['power_low_mid'][loc_end_5M] = 0
@@ -459,19 +459,19 @@ class Tester:
 		if flaglearn == False:
 			if diff_pr_top < st_percent_min:
 				diff_pr_top = st_percent_min
-				extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(st_percent_min/100))
+				extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(st_percent_min/100))
 
 			if diff_pr_down < tp_percent_min:
 				diff_pr_down = tp_percent_min
-				extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M_price] * (1-(tp_percent_min/100))
+				extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M] * (1-(tp_percent_min/100))
 
 		if diff_pr_top > st_percent_max:
 			diff_pr_top = st_percent_max
-			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(st_percent_max/100))
+			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(st_percent_max/100))
 		
 		if diff_pr_down > tp_percent_max:
 			diff_pr_down = tp_percent_max
-			extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M_price] * (1-(tp_percent_max/100))
+			extereme['low_lower'][loc_end_5M] = dataset_5M['low'][loc_end_5M] * (1-(tp_percent_max/100))
 
 
 		if (
