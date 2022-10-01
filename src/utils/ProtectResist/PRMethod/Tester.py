@@ -54,12 +54,37 @@ class Tester:
 		#Checking SMA:
 
 		SMA_50 = ind.sma(dataset_5M['close'], length = 50)
+		SMA_25 = ind.sma(dataset_5M['close'], length = 25)
 
 		if (len(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) > 1:
 			loc_end_5M_price = loc_end_5M +  min(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])
 
+			if SMA_25[loc_end_5M_price] < SMA_50[loc_end_5M_price]:
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
+
 		elif (len(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) == 1:
 			loc_end_5M_price = loc_end_5M + np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0][0]
+
+			if SMA_25[loc_end_5M_price] < SMA_50[loc_end_5M_price]:
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
 
 		else:
 			extereme = extereme.assign(
@@ -402,12 +427,37 @@ class Tester:
 		#Checking SMA:
 
 		SMA_50 = ind.sma(dataset_5M['close'], length = 50)
+		SMA_25 = ind.sma(dataset_5M['close'], length = 25)
 
 		if (len(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) > 1:
 			loc_end_5M_price = loc_end_5M +  min(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])
 
+			if SMA_25[loc_end_5M_price] > SMA_50[loc_end_5M_price]:
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
+
 		elif (len(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) == 1:
 			loc_end_5M_price = loc_end_5M + np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0][0]
+
+			if SMA_25[loc_end_5M_price] > SMA_50[loc_end_5M_price]:
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
 
 		else:
 			extereme = extereme.assign(
