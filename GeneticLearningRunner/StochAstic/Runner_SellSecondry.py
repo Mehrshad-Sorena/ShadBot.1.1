@@ -50,7 +50,7 @@ def Run():
 	optimizers.symbol = 'XAUUSD_i'
 	optimizers.sigpriority = 'secondry'
 	optimizers.sigtype = 'sell'
-	optimizers.turn = 5000
+	optimizers.turn = 7000
 	optimizers.dataset = parameters.elements['dataset_5M'].copy()
 	optimizers.timeframe = '5M'
 
