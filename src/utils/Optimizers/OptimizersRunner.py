@@ -22,7 +22,7 @@ class OptimizersRunner():
 		optimizers.symbol = self.symbol
 		optimizers.sigpriority = sigpriority
 		optimizers.sigtype = sigtype
-		optimizers.turn = 1000
+		optimizers.turn = 10
 		optimizers.dataset = dataset.copy()
 		optimizers.timeframe = timeframe
 
@@ -60,7 +60,7 @@ class OptimizersRunner():
 		optimizers.symbol = self.symbol
 		optimizers.sigpriority = sigpriority
 		optimizers.sigtype = sigtype
-		optimizers.turn = 1000
+		optimizers.turn = 10
 		optimizers.dataset = dataset.copy()
 		optimizers.timeframe = timeframe
 
@@ -98,7 +98,7 @@ class OptimizersRunner():
 		optimizers.symbol = self.symbol
 		optimizers.sigpriority = sigpriority
 		optimizers.sigtype = sigtype
-		optimizers.turn = 1000
+		optimizers.turn = 10
 		optimizers.dataset = dataset.copy()
 		optimizers.timeframe = timeframe
 
