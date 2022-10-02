@@ -163,7 +163,7 @@ from src.utils.FeatureEngineering.WindowGenerator import WindowGenerator
 # 				                    )
 
 wide_window = WindowGenerator(
-								input_width = 240 + 23, 
+								input_width = 240,# + 23, 
 								label_width = 240, 
 								shift = 1,
 								train_df = train_df,
@@ -242,43 +242,74 @@ from src.utils.FeatureEngineering.BaseLine import BaseLine
 #Linear Model: ************************************************************************
 from src.utils.FeatureEngineering.ModelGenerator import ModelGenerator
 
-print()
-print('Linear Model Started .............')
-print()
+# print()
+# print('Linear Model Started .............')
+# print()
 
-wide_window.PriceName = 'high'
+# wide_window.PriceName = 'high'
 
 
-linear = tf.keras.Sequential([
-								#tf.keras.layers.Flatten(),
-								tf.keras.layers.LSTM(32, return_sequences = True),
-								tf.keras.layers.Conv1D(
-														filters = 32,
-							                           	kernel_size = (24,),
-							                           	activation = 'relu'),
-								#tf.keras.layers.Flatten(),
-								tf.keras.layers.Dense(units = 64, activation = 'relu'),
-								#tf.keras.layers.LSTM(32, return_sequences = False),
-								tf.keras.layers.Dense(units = num_features),
-								#tf.keras.layers.Reshape([1, -1]),
-							])
+# linear = tf.keras.Sequential([
+# 								#tf.keras.layers.Flatten(),
+# 								tf.keras.layers.LSTM(32, return_sequences = True),
+# 								tf.keras.layers.Conv1D(
+# 														filters = 32,
+# 							                           	kernel_size = (24,),
+# 							                           	activation = 'relu'),
+# 								#tf.keras.layers.Flatten(),
+# 								tf.keras.layers.Dense(units = 64, activation = 'relu'),
+# 								#tf.keras.layers.LSTM(32, return_sequences = False),
+# 								tf.keras.layers.Dense(units = num_features),
+# 								#tf.keras.layers.Reshape([1, -1]),
+# 							])
+
+# model_generator = ModelGenerator(label_index = column_indices['close_5m'])
+
+# history = model_generator.compile_and_fit(model = linear, window = wide_window)
+
+# print(history)
+
+# val_performance = {}
+# performance = {}
+
+# val_performance['Linear'] = linear.evaluate(wide_window.val)
+# performance['Linear'] = linear.evaluate(wide_window.test, verbose=0)
+
+# wide_window.plot(model = linear, plot_col = 'close_5m')
+
+#/////////////////////////////////////////////////////////////////////////////////////////
+
+#ResidualModel ********************************************************************************
+
+from src.utils.FeatureEngineering.ResidualWrapper import ResidualWrapper
+
+residual_lstm = ResidualWrapper(
+								tf.keras.Sequential([
+    												tf.keras.layers.LSTM(32, return_sequences=True),
+    												tf.keras.layers.Conv1D(
+																			filters = 32,
+												                           	kernel_size = (240,),
+												                           	activation = 'relu'
+												                           	),
+    												tf.keras.layers.Dense(units = 64, activation = 'relu'),
+												    tf.keras.layers.Dense(
+												        num_features,
+												        # The predicted deltas should start small.
+												        # Therefore, initialize the output layer with zeros.
+												        kernel_initializer=tf.initializers.zeros())
+													])
+								)
+
+model_generator = ModelGenerator(label_index = column_indices['close_5m'])
+
+history = model_generator.compile_and_fit(residual_lstm, wide_window)
+
+wide_window.plot(model = residual_lstm, plot_col = 'close_5m')
 
 print('Input shape:', wide_window.example[0].shape)
 print('Output shape:', linear(wide_window.example[0]).shape)
 
-model_generator = ModelGenerator(label_index = column_indices['close_5m'])
-
-history = model_generator.compile_and_fit(model = linear, window = wide_window)
-
-print(history)
-
-val_performance = {}
-performance = {}
-
-val_performance['Linear'] = linear.evaluate(wide_window.val)
-performance['Linear'] = linear.evaluate(wide_window.test, verbose=0)
-
-wide_window.plot(model = linear, plot_col = 'close_5m')
+#//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 # import matplotlib.pyplot as plt
 
