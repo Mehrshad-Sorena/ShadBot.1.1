@@ -21,6 +21,8 @@ from src.utils.Divergence.Tester import Tester
 from src.utils.ProtectResist.PRMethod.Runner import Runner
 from src.utils.Optimizers import NoiseCanceller
 
+from src.indicators.ZigZag import ZigZag
+
 import copy
 import sys
 
@@ -521,13 +523,20 @@ class RSI:
 			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
 			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
+			zigzag = ZigZag.Find(
+									dataset = dataset_5M_real, 
+									index_first = int(signal_buy_primary['index_back'][lst_idx_buy_primary]), 
+									index_last = len(dataset_5M_real.index)
+									)
+
 			if (
 				rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary + 1] and
 				rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary + 2] and
 				rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary - 1] and
 				rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary - 2] and
 				dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_primary['index_back'][lst_idx_buy_primary]): ]) and
-				SMA_25.iloc[-1] >= SMA_50.iloc[-1]
+				SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
+				zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
 				):
 
 				print('======> last signal buy primary rsi ',symbol)
@@ -629,13 +638,20 @@ class RSI:
 			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
 			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
+			zigzag = ZigZag.Find(
+									dataset = dataset_5M_real, 
+									index_first = int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]), 
+									index_last = len(dataset_5M_real.index)
+									)
+
 			if (
 				rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry + 1] and
 				rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry + 2] and
 				rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry - 1] and
 				rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry - 2] and
 				dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]): ]) and
-				SMA_25.iloc[-1] >= SMA_50.iloc[-1]
+				SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
+				zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
 				):
 
 				print('======> last signal buy secondry rsi ',symbol)
@@ -738,13 +754,20 @@ class RSI:
 			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
 			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
+			zigzag = ZigZag.Find(
+									dataset = dataset_5M_real, 
+									index_first = int(signal_sell_primary['index_back'][lst_idx_sell_primary]), 
+									index_last = len(dataset_5M_real.index)
+									)
+
 			if (
 				rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary + 1] and
 				rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary + 2] and
 				rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary - 1] and
 				rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary - 2] and
 				dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_primary['index_back'][lst_idx_sell_primary]): ]) and
-				SMA_25.iloc[-1] <= SMA_50.iloc[-1]
+				SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
+				zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
 				):
 
 				print('======> last signal sell primary rsi ',symbol)
@@ -841,13 +864,20 @@ class RSI:
 			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
 			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
+			zigzag = ZigZag.Find(
+									dataset = dataset_5M_real, 
+									index_first = int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]), 
+									index_last = len(dataset_5M_real.index)
+									)
+
 			if (
 				rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry + 1] and
 				rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry + 2] and
 				rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry - 1] and
 				rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry - 2] and
 				dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]): ]) and
-				SMA_25.iloc[-1] <= SMA_50.iloc[-1]
+				SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
+				zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
 				):
 
 				print('======> last signal sell secondry rsi ',symbol)
