@@ -55,8 +55,8 @@ def carrier_buy(symbol,lot,st,tp,comment,magic):
 				print('spred return: ',spred)
 				return
 
-	tp = tp - abs(price_ask-price_bid)
-	#st = st - abs(price_ask-price_bid)
+	# tp = tp - abs(price_ask-price_bid)
+	# st = st - abs(price_ask-price_bid)
 
 	if (tp <= (price)): 
 		print('tp return: ',price)
@@ -75,8 +75,8 @@ def carrier_buy(symbol,lot,st,tp,comment,magic):
     	"volume": lot,
     	"type": mt5.ORDER_TYPE_BUY,
     	"price": price,
-    	"sl": st,
-    	"tp": tp,
+    	"sl": float("{:.2f}".format((st))),
+    	"tp": float("{:.2f}".format((tp))),
     	"deviation": deviation,
     	"magic": magic,
     	"comment": comment,
@@ -157,8 +157,8 @@ def carrier_sell(symbol,lot,st,tp,comment,magic):
 				print('spred return: ',spred)
 				return
 
-	tp = tp + abs(price_ask-price_bid)
-	st = st + abs(price_ask-price_bid)
+	# tp = tp + abs(price_ask-price_bid)
+	# st = st + abs(price_ask-price_bid)
 
 	if (st <= price_ask): 
 		print('st return: ',price_ask)
@@ -179,8 +179,8 @@ def carrier_sell(symbol,lot,st,tp,comment,magic):
     	"volume": lot,
     	"type": mt5.ORDER_TYPE_SELL,
     	"price": price,
-    	"sl": st,
-    	"tp": tp,
+    	"sl": float("{:.2f}".format((st))),
+    	"tp": float("{:.2f}".format((tp))),
     	"deviation": deviation,
     	"magic": magic,
     	"comment": comment,
