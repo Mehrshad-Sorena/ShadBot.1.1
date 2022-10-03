@@ -152,8 +152,8 @@ class Optimizers():
 																		'HLCC/4',
 																		'OHLC/4'
 																		])
-			macd_parameters.elements['MACD' + '_fast'] = randint(2, 300)
-			macd_parameters.elements['MACD' + '_slow'] = randint(2 , 700)
+			macd_parameters.elements['MACD' + '_fast'] = randint(2, 100)#300)
+			macd_parameters.elements['MACD' + '_slow'] = randint(2 , 100)#700)
 			macd_parameters.elements['MACD' + '_signal'] = randint(2 , 50)
 
 			ind_params.elements['Divergence' + '_diff_extereme'] = randint(1 , 6)
@@ -163,8 +163,8 @@ class Optimizers():
 			dive_column = random.choice(['macd', 'macds', 'macdh'])
 
 			while macd_parameters.elements['MACD' + '_fast'] + 10 >= macd_parameters.elements['MACD' + '_slow']:
-				macd_parameters.elements['MACD' + '_fast'] = randint(2, 300)
-				macd_parameters.elements['MACD' + '_slow'] = randint(2 , 700)
+				macd_parameters.elements['MACD' + '_fast'] = randint(2, 100)#300)
+				macd_parameters.elements['MACD' + '_slow'] = randint(2 , 100)#700)
 
 			repeat_counter = 0
 			if output.dropna().empty == False:
@@ -205,8 +205,8 @@ class Optimizers():
 																				'HLCC/4',
 																				'OHLC/4'
 																				])
-					macd_parameters.elements['MACD' + '_fast'] = randint(2, 300)
-					macd_parameters.elements['MACD' + '_slow'] = randint(2 , 700)
+					macd_parameters.elements['MACD' + '_fast'] = randint(2, 100)#300)
+					macd_parameters.elements['MACD' + '_slow'] = randint(2 , 100)#700)
 					macd_parameters.elements['MACD' + '_signal'] = randint(2 , 50)
 
 					ind_params.elements['Divergence' + '_diff_extereme'] = randint(1 , 6)
@@ -216,8 +216,8 @@ class Optimizers():
 					dive_column = random.choice(['macd', 'macds', 'macdh'])
 
 					while macd_parameters.elements['MACD' + '_fast'] + 10 >= macd_parameters.elements['MACD' + '_slow']:
-						macd_parameters.elements['MACD' + '_fast'] = randint(2, 300)
-						macd_parameters.elements['MACD' + '_slow'] = randint(2 , 700)
+						macd_parameters.elements['MACD' + '_fast'] = randint(2, 100)#300)
+						macd_parameters.elements['MACD' + '_slow'] = randint(2 , 100)#700)
 
 					repeat_checker_now = np.where(
 											(macd_parameters.elements['MACD' + '_fast'] == output['MACD_fast'].values) &
@@ -403,8 +403,8 @@ class Optimizers():
 																				'ema',
 																				'wma',
 																				])
-			stochastic_parameters.elements['StochAstic_k'] = randint(2, 500)
-			stochastic_parameters.elements['StochAstic_d'] = randint(2 , 900)
+			stochastic_parameters.elements['StochAstic_k'] = randint(2, 100)#500)
+			stochastic_parameters.elements['StochAstic_d'] = randint(2 , 100)#900)
 			stochastic_parameters.elements['StochAstic_smooth_k'] = randint(2 , 50)
 
 			ind_params.elements['Divergence' + '_diff_extereme'] = randint(1 , 6)
@@ -417,8 +417,8 @@ class Optimizers():
 			dive_column = random.choice(['StochAstic_k', 'StochAstic_d'])
 
 			while stochastic_parameters.elements['StochAstic_d'] + 2 >= stochastic_parameters.elements['StochAstic_k']:
-				stochastic_parameters.elements['StochAstic_k'] = randint(2, 900)
-				stochastic_parameters.elements['StochAstic_d'] = randint(2 , 900)
+				stochastic_parameters.elements['StochAstic_k'] = randint(2, 100)#900)
+				stochastic_parameters.elements['StochAstic_d'] = randint(2 , 100)#900)
 
 			repeat_counter = 0
 			if output.dropna().empty == False:
@@ -454,8 +454,8 @@ class Optimizers():
 																						'ema',
 																						'wma',
 																						])
-					stochastic_parameters.elements['StochAstic_k'] = randint(2, 500)
-					stochastic_parameters.elements['StochAstic_d'] = randint(2 , 900)
+					stochastic_parameters.elements['StochAstic_k'] = randint(2, 100)#500)
+					stochastic_parameters.elements['StochAstic_d'] = randint(2 , 100)#900)
 					stochastic_parameters.elements['StochAstic_smooth_k'] = randint(2 , 50)
 
 					ind_params.elements['Divergence' + '_diff_extereme'] = randint(1 , 6)
@@ -465,8 +465,8 @@ class Optimizers():
 					dive_column = random.choice(['macd', 'macds', 'macdh'])
 
 					while stochastic_parameters.elements['StochAstic_d'] + 2 >= stochastic_parameters.elements['StochAstic_k']:
-						stochastic_parameters.elements['StochAstic_k'] = randint(2, 700)
-						stochastic_parameters.elements['StochAstic_d'] = randint(2 , 700)
+						stochastic_parameters.elements['StochAstic_k'] = randint(2, 100)#700)
+						stochastic_parameters.elements['StochAstic_d'] = randint(2 , 100)#700)
 
 					repeat_checker_now = np.where(
 											(stochastic_parameters.elements['StochAstic_k'] == output['StochAstic_k'].values) &
