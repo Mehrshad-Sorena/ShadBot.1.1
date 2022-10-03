@@ -38,10 +38,10 @@ class OptimizersRunner():
 		 	self.TaskMACD(timeframe = '5M', sigtype = 'sell', sigpriority = 'primary').start()
 		 	self.TaskMACD(timeframe = '5M', sigtype = 'sell', sigpriority = 'secondry').start()
 
-		 	self.TaskMACD(timeframe = '1H', sigtype = 'buy', sigpriority = 'primary').start()
-		 	self.TaskMACD(timeframe = '1H', sigtype = 'buy', sigpriority = 'secondry').start()
-		 	self.TaskMACD(timeframe = '1H', sigtype = 'sell', sigpriority = 'primary').start()
-		 	self.TaskMACD(timeframe = '1H', sigtype = 'sell', sigpriority = 'secondry').start()
+		 	# self.TaskMACD(timeframe = '1H', sigtype = 'buy', sigpriority = 'primary').start()
+		 	# self.TaskMACD(timeframe = '1H', sigtype = 'buy', sigpriority = 'secondry').start()
+		 	# self.TaskMACD(timeframe = '1H', sigtype = 'sell', sigpriority = 'primary').start()
+		 	# self.TaskMACD(timeframe = '1H', sigtype = 'sell', sigpriority = 'secondry').start()
 
 		except Exception as ex:
 			print('MACD Optimizer ERROR: ', ex)
@@ -76,10 +76,10 @@ class OptimizersRunner():
 		 	self.TaskStochAstic(timeframe = '5M', sigtype = 'sell', sigpriority = 'primary').start()
 		 	self.TaskStochAstic(timeframe = '5M', sigtype = 'sell', sigpriority = 'secondry').start()
 
-		 	self.TaskStochAstic(timeframe = '1H', sigtype = 'buy', sigpriority = 'primary').start()
-		 	self.TaskStochAstic(timeframe = '1H', sigtype = 'buy', sigpriority = 'secondry').start()
-		 	self.TaskStochAstic(timeframe = '1H', sigtype = 'sell', sigpriority = 'primary').start()
-		 	self.TaskStochAstic(timeframe = '1H', sigtype = 'sell', sigpriority = 'secondry').start()
+		 	# self.TaskStochAstic(timeframe = '1H', sigtype = 'buy', sigpriority = 'primary').start()
+		 	# self.TaskStochAstic(timeframe = '1H', sigtype = 'buy', sigpriority = 'secondry').start()
+		 	# self.TaskStochAstic(timeframe = '1H', sigtype = 'sell', sigpriority = 'primary').start()
+		 	# self.TaskStochAstic(timeframe = '1H', sigtype = 'sell', sigpriority = 'secondry').start()
 
 		except Exception as ex:
 			print('StochAstic Optimizer ERROR: ', ex)
@@ -114,10 +114,10 @@ class OptimizersRunner():
 		 	self.TaskRSI(timeframe = '5M', sigtype = 'sell', sigpriority = 'primary').start()
 		 	self.TaskRSI(timeframe = '5M', sigtype = 'sell', sigpriority = 'secondry').start()
 
-		 	self.TaskRSI(timeframe = '1H', sigtype = 'buy', sigpriority = 'primary').start()
-		 	self.TaskRSI(timeframe = '1H', sigtype = 'buy', sigpriority = 'secondry').start()
-		 	self.TaskRSI(timeframe = '1H', sigtype = 'sell', sigpriority = 'primary').start()
-		 	self.TaskRSI(timeframe = '1H', sigtype = 'sell', sigpriority = 'secondry').start()
+		 	# self.TaskRSI(timeframe = '1H', sigtype = 'buy', sigpriority = 'primary').start()
+		 	# self.TaskRSI(timeframe = '1H', sigtype = 'buy', sigpriority = 'secondry').start()
+		 	# self.TaskRSI(timeframe = '1H', sigtype = 'sell', sigpriority = 'primary').start()
+		 	# self.TaskRSI(timeframe = '1H', sigtype = 'sell', sigpriority = 'secondry').start()
 
 		except Exception as ex:
 			print('RSI Optimizer ERROR: ', ex)
