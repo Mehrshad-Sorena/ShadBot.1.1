@@ -39,12 +39,17 @@ dataset_5M = main_features.Get(
 dataset_5M.index = pd.to_datetime(dataset_5M['time_5m'])
 
 #Spliting Without Return:
+print(len(dataset_5M))
 
 dataset = dataset_5M.drop(columns = ['time_5m', 'time_1h']).copy(deep = True)
-dataset = dataset.copy(deep = True).resample(str(20) + 'T').last().dropna(subset=['close_5m'])
+dataset = dataset.fillna(method = 'ffill')
+print(dataset)
+print(len(dataset))
+# dataset = dataset.copy(deep = True).resample(str(20) + 'T').last().fillna(method = 'ffill').dropna(subset=['close_5m'])
 dataset = dataset.pct_change(2).dropna()#subset=['close_5m'])
 dataset = (dataset.drop(columns = ['volume_5m', 'volume_1h']) * 100).assign(volume_5m = dataset['volume_5m'], volume_1h = dataset['volume_1h'])
 
+print(len(dataset))
 print(dataset)
 
 # close = dataset['close']
