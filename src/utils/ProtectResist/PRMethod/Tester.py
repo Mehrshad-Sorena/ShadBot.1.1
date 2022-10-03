@@ -2,6 +2,7 @@
 from src.utils.DataReader.MetaTraderReader5.LoginGetData import LoginGetData as getdata
 from src.utils.Divergence.Config import Config as Divergence_Config
 from src.utils.Divergence.Divergence import Divergence
+from src.indicators.ZigZag import ZigZag
 import pandas_ta as ind
 import pandas as pd
 import numpy as np
@@ -56,6 +57,8 @@ class Tester:
 		SMA_50 = ind.sma(dataset_5M['close'], length = 50)
 		SMA_25 = ind.sma(dataset_5M['close'], length = 25)
 
+		index_start_ZigZag = int(signals['index_back'][loc_end_5M])
+
 		if (len(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) > 1:
 			loc_end_5M_price = loc_end_5M +  min(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])
 
@@ -71,10 +74,48 @@ class Tester:
 										)
 				return extereme
 
+			zigzag = ZigZag.Find(
+									dataset = dataset_5M_real, 
+									index_first = index_start_ZigZag, 
+									index_last = loc_end_5M_price
+									)
+
+			if zigzag.values[-2] > dataset_5M_real['low'][loc_end_5M_price]:
+				
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
+
 		elif (len(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) == 1:
 			loc_end_5M_price = loc_end_5M + np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0][0]
 
 			if SMA_25[loc_end_5M_price] < SMA_50[loc_end_5M_price]:
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
+
+			zigzag = ZigZag.Find(
+									dataset = dataset_5M_real, 
+									index_first = index_start_ZigZag, 
+									index_last = loc_end_5M_price
+									)
+
+			if zigzag.values[-2] > dataset_5M_real['low'][loc_end_5M_price]:
+				
 				extereme = extereme.assign(
 										flag =  'no_flag',
 										tp_pr =  np.nan,
@@ -429,6 +470,8 @@ class Tester:
 		SMA_50 = ind.sma(dataset_5M['close'], length = 50)
 		SMA_25 = ind.sma(dataset_5M['close'], length = 25)
 
+		index_start_ZigZag = int(signals['index_back'][loc_end_5M])
+
 		if (len(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) > 1:
 			loc_end_5M_price = loc_end_5M +  min(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])
 
@@ -444,10 +487,48 @@ class Tester:
 										)
 				return extereme
 
+			zigzag = ZigZag.Find(
+									dataset = dataset_5M_real, 
+									index_first = index_start_ZigZag, 
+									index_last = loc_end_5M_price
+									)
+
+			if zigzag.values[-2] < dataset_5M_real['high'][loc_end_5M_price]:
+				
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
+
 		elif (len(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) == 1:
 			loc_end_5M_price = loc_end_5M + np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0][0]
 
 			if SMA_25[loc_end_5M_price] > SMA_50[loc_end_5M_price]:
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
+
+			zigzag = ZigZag.Find(
+									dataset = dataset_5M_real, 
+									index_first = index_start_ZigZag, 
+									index_last = loc_end_5M_price
+									)
+
+			if zigzag.values[-2] < dataset_5M_real['high'][loc_end_5M_price]:
+				
 				extereme = extereme.assign(
 										flag =  'no_flag',
 										tp_pr =  np.nan,
@@ -779,5 +860,7 @@ class Tester:
 
 
 	#/////////////////////////////
+
+
 
 	
