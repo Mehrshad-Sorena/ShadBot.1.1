@@ -23,6 +23,8 @@ from src.utils.Optimizers import NoiseCanceller
 
 from src.indicators.ZigZag import ZigZag
 
+import matplotlib.pyplot as plt
+
 import copy
 import sys
 
@@ -518,27 +520,28 @@ class MACD:
 			lst_idx_buy_primary > lst_idx_sell_primary and
 			lst_idx_buy_primary > lst_idx_sell_secondry and
 			lst_idx_buy_primary >= lst_idx_buy_secondry and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) <= 50 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) <= 6 and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) >= 1
 			):
 
-			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
-			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
+			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			# SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
-			zigzag = ZigZag.Find(
-									dataset = dataset_5M_real, 
-									index_first = int(signal_buy_primary['index_back'][lst_idx_buy_primary]), 
-									index_last = len(dataset_5M_real.index)
-									)
+			# zigzag = ZigZag.Find(
+			# 						dataset = dataset_5M_real, 
+			# 						index_first = int(signal_buy_primary['index_back'][lst_idx_buy_primary]), 
+			# 						index_last = len(dataset_5M_real.index)
+			# 						)
 
 			if (
 				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary + 1] and
 				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary + 2] and
 				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary - 1] and
 				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary - 2] and
-				dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_primary['index_back'][lst_idx_buy_primary]): ]) and
-				SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
-				zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
+				dataset_5M_real['low'][signal_buy_primary['index_back'][lst_idx_buy_primary]] > dataset_5M_real['low'][lst_idx_buy_primary]
+				# dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_primary['index_back'][lst_idx_buy_primary]): ]) and
+				# SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
+				# zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
 				):
 				print('======> last signal buy primary macd ',symbol)
 				print('dataset length: ',len(dataset_5M[symbol]['close']))
@@ -633,27 +636,28 @@ class MACD:
 			lst_idx_buy_secondry > lst_idx_sell_primary and
 			lst_idx_buy_secondry > lst_idx_sell_secondry and
 			lst_idx_buy_secondry > lst_idx_buy_primary and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) <= 50 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) <= 6 and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) >= 1
 			):
 
-			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
-			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
+			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			# SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
-			zigzag = ZigZag.Find(
-									dataset = dataset_5M_real, 
-									index_first = int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]), 
-									index_last = len(dataset_5M_real.index)
-									)
+			# zigzag = ZigZag.Find(
+			# 						dataset = dataset_5M_real, 
+			# 						index_first = int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]), 
+			# 						index_last = len(dataset_5M_real.index)
+			# 						)
 
 			if (
 				macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry] < macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry + 1] and
 				macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry] < macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry + 2] and
 				macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry] < macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry - 1] and
 				macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry] < macd_calc_buy_secondry[GL_Results_buy_secondry['MACD_column_div'][0]][lst_idx_buy_secondry - 2] and
-				dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]): ]) and
-				SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
-				zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
+				dataset_5M_real['low'][signal_buy_secondry['index_back'][lst_idx_buy_secondry]] < dataset_5M_real['low'][lst_idx_buy_secondry]
+				# dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]): ]) and
+				# SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
+				# zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
 				):
 				print('======> last signal buy secondry macd ',symbol)
 				print('dataset length: ',len(dataset_5M[symbol]['close']))
@@ -748,27 +752,28 @@ class MACD:
 			lst_idx_sell_primary > lst_idx_buy_primary and
 			lst_idx_sell_primary >= lst_idx_sell_secondry and
 			lst_idx_sell_primary > lst_idx_buy_secondry and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) <= 50 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) <= 6 and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) >= 1
 			):
 
-			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
-			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
+			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			# SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
-			zigzag = ZigZag.Find(
-									dataset = dataset_5M_real, 
-									index_first = int(signal_sell_primary['index_back'][lst_idx_sell_primary]), 
-									index_last = len(dataset_5M_real.index)
-									)
+			# zigzag = ZigZag.Find(
+			# 						dataset = dataset_5M_real, 
+			# 						index_first = int(signal_sell_primary['index_back'][lst_idx_sell_primary]), 
+			# 						index_last = len(dataset_5M_real.index)
+			# 						)
 
 			if (
 				macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary] > macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary + 1] and
 				macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary] > macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary + 2] and
 				macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary] > macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary - 1] and
 				macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary] > macd_calc_sell_primary[GL_Results_sell_primary['MACD_column_div'][0]][lst_idx_sell_primary - 2] and
-				dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_primary['index_back'][lst_idx_sell_primary]): ]) and
-				SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
-				zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
+				dataset_5M_real['high'][signal_sell_primary['index_back'][lst_idx_sell_primary]] < dataset_5M_real['high'][lst_idx_sell_primary]
+				# dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_primary['index_back'][lst_idx_sell_primary]): ]) and
+				# SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
+				# zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
 				):
 				print('======> last signal sell primary macd ',symbol)
 				print('dataset length: ',len(dataset_5M_real[symbol]['close']))
@@ -857,27 +862,28 @@ class MACD:
 			lst_idx_sell_secondry > lst_idx_buy_primary and
 			lst_idx_sell_secondry > lst_idx_sell_primary and
 			lst_idx_sell_secondry > lst_idx_buy_secondry and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) <= 50 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) <= 6 and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) >= 1
 			):
 
-			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
-			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
+			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			# SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
-			zigzag = ZigZag.Find(
-									dataset = dataset_5M_real, 
-									index_first = int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]), 
-									index_last = len(dataset_5M_real.index)
-									)
+			# zigzag = ZigZag.Find(
+			# 						dataset = dataset_5M_real, 
+			# 						index_first = int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]), 
+			# 						index_last = len(dataset_5M_real.index)
+			# 						)
 
 			if (
 				macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry] > macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry + 1] and
 				macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry] > macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry + 2] and
 				macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry] > macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry - 1] and
 				macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry] > macd_calc_sell_secondry[GL_Results_sell_secondry['MACD_column_div'][0]][lst_idx_sell_secondry - 2] and
-				dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]): ]) and
-				SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
-				zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
+				dataset_5M_real['high'][signal_sell_secondry['index_back'][lst_idx_sell_secondry]] > dataset_5M_real['high'][lst_idx_sell_secondry]
+				# dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]): ]) and
+				# SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
+				# zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
 				):
 
 				print('======> last signal sell secondry macd ',symbol)
@@ -1064,14 +1070,14 @@ class MACD:
 
 		macd_calc = self.calculator_macd()
 
-		if 'permit' in GL_Results.columns:
-			if (
-				GL_Results['permit'][0] == True and
-				GL_Results['draw_down'][0] <= 7
-				): 
-				return GL_Results
+		# if 'permit' in GL_Results.columns:
+		# 	if (
+		# 		GL_Results['permit'][0] == True and
+		# 		GL_Results['draw_down'][0] <= 7
+		# 		): 
+		# 		return GL_Results
 
-		try:
+		if True:#try:
 
 			signal, signaltype, indicator = macd.divergence(
 															sigtype = signaltype,
@@ -1105,7 +1111,7 @@ class MACD:
 																indicator = indicator,
 																flag_savepic = flag_savepic
 																)
-		except Exception as ex:
+		else:#except Exception as ex:
 			print('Permit Error: ', ex)
 
 			signal_output = pd.DataFrame()
@@ -1113,6 +1119,9 @@ class MACD:
 
 		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 		# 	print('signals = ', signal_output['money'])
+
+		plt.plot(signal_output['money'])
+		plt.show()
 
 		with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 			print(learning_output)
