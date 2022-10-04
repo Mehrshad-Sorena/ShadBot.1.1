@@ -55,11 +55,12 @@ def Run():
 	optimizers.dataset = parameters.elements['dataset_5M'].copy()
 	optimizers.timeframe = '5M'
 
-	optimizers.RSIOptimizer()
+	# optimizers.RSIOptimizer()
 
 	rsi = RSI(parameters = parameters, config = config)
 
 	try:
+		# print(a)
 		rsi_calc = rsi.Genetic(
 								dataset_5M_real = dataset_5M_real,
 								dataset_5M = parameters.elements['dataset_5M'], 
