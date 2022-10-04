@@ -57,13 +57,14 @@ def Run():
 	optimizers.dataset = parameters.elements['dataset_5M'].copy()
 	optimizers.timeframe = '5M'
 
-	optimizers.MacdOptimizer()
+	# optimizers.MacdOptimizer()
 
 	#parameters.elements['dataset_5M'], parameters.elements['dataset_1H'] = loging.readall(symbol = 'XAUUSD_i', number_5M = 'all', number_1H = 'all')
 
 	macd = MACD(parameters = parameters, config = config)
 
 	try:
+		# print(a)
 		macd_calc = macd.Genetic(
 								dataset_5M_real = dataset_5M_real,
 								dataset_5M = parameters.elements['dataset_5M'], 
