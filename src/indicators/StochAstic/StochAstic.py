@@ -519,27 +519,28 @@ class StochAstic:
 			lst_idx_buy_primary > lst_idx_sell_primary and
 			lst_idx_buy_primary > lst_idx_sell_secondry and
 			lst_idx_buy_primary >= lst_idx_buy_secondry and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) <= 50 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) <= 6 and
 			(len(dataset_5M[symbol]['close']) - 1 - lst_idx_buy_primary) >= 1
 			):
 
-			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
-			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
+			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			# SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
-			zigzag = ZigZag.Find(
-									dataset = dataset_5M_real, 
-									index_first = int(signal_buy_primary['index_back'][lst_idx_buy_primary]), 
-									index_last = len(dataset_5M_real.index)
-									)
+			# zigzag = ZigZag.Find(
+			# 						dataset = dataset_5M_real, 
+			# 						index_first = int(signal_buy_primary['index_back'][lst_idx_buy_primary]), 
+			# 						index_last = len(dataset_5M_real.index)
+			# 						)
 
 			if (
 				StochAstic_calc_buy_primary[GL_Results_buy_primary['StochAstic_column_div'][0]][lst_idx_buy_primary] < StochAstic_calc_buy_primary[GL_Results_buy_primary['StochAstic_column_div'][0]][lst_idx_buy_primary + 1] and
 				StochAstic_calc_buy_primary[GL_Results_buy_primary['StochAstic_column_div'][0]][lst_idx_buy_primary] < StochAstic_calc_buy_primary[GL_Results_buy_primary['StochAstic_column_div'][0]][lst_idx_buy_primary + 2] and
 				StochAstic_calc_buy_primary[GL_Results_buy_primary['StochAstic_column_div'][0]][lst_idx_buy_primary] < StochAstic_calc_buy_primary[GL_Results_buy_primary['StochAstic_column_div'][0]][lst_idx_buy_primary - 1] and
 				StochAstic_calc_buy_primary[GL_Results_buy_primary['StochAstic_column_div'][0]][lst_idx_buy_primary] < StochAstic_calc_buy_primary[GL_Results_buy_primary['StochAstic_column_div'][0]][lst_idx_buy_primary - 2] and
-				dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_primary['index_back'][lst_idx_buy_primary]): ]) and
-				SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
-				zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
+				dataset_5M_real['low'][signal_buy_primary['index_back'][lst_idx_buy_primary]] > dataset_5M_real['low'][lst_idx_buy_primary]
+				# dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_primary['index_back'][lst_idx_buy_primary]): ]) and
+				# SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
+				# zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
 				):
 
 				print('======> last signal buy primary stochastic ',symbol)
@@ -635,27 +636,28 @@ class StochAstic:
 			lst_idx_buy_secondry > lst_idx_sell_primary and
 			lst_idx_buy_secondry > lst_idx_sell_secondry and
 			lst_idx_buy_secondry > lst_idx_buy_primary and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) <= 50 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) <= 6 and
 			(len(dataset_5M[symbol]['close']) - 1 - lst_idx_buy_secondry) >= 1
 			):
 
-			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
-			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
+			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			# SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
-			zigzag = ZigZag.Find(
-									dataset = dataset_5M_real, 
-									index_first = int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]), 
-									index_last = len(dataset_5M_real.index)
-									)
+			# zigzag = ZigZag.Find(
+			# 						dataset = dataset_5M_real, 
+			# 						index_first = int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]), 
+			# 						index_last = len(dataset_5M_real.index)
+			# 						)
 
 			if (
 				StochAstic_calc_buy_secondry[GL_Results_buy_secondry['StochAstic_column_div'][0]][lst_idx_buy_secondry] < StochAstic_calc_buy_secondry[GL_Results_buy_secondry['StochAstic_column_div'][0]][lst_idx_buy_secondry + 1] and
 				StochAstic_calc_buy_secondry[GL_Results_buy_secondry['StochAstic_column_div'][0]][lst_idx_buy_secondry] < StochAstic_calc_buy_secondry[GL_Results_buy_secondry['StochAstic_column_div'][0]][lst_idx_buy_secondry + 2] and
 				StochAstic_calc_buy_secondry[GL_Results_buy_secondry['StochAstic_column_div'][0]][lst_idx_buy_secondry] < StochAstic_calc_buy_secondry[GL_Results_buy_secondry['StochAstic_column_div'][0]][lst_idx_buy_secondry - 1] and
 				StochAstic_calc_buy_secondry[GL_Results_buy_secondry['StochAstic_column_div'][0]][lst_idx_buy_secondry] < StochAstic_calc_buy_secondry[GL_Results_buy_secondry['StochAstic_column_div'][0]][lst_idx_buy_secondry - 2] and
-				dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]): ]) and
-				SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
-				zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
+				dataset_5M_real['low'][signal_buy_secondry['index_back'][lst_idx_buy_secondry]] < dataset_5M_real['low'][lst_idx_buy_secondry]
+				# dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]): ]) and
+				# SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
+				# zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
 				):
 				print('======> last signal buy secondry stochastic ',symbol)
 				print('dataset length: ',len(dataset_5M[symbol]['close']))
@@ -749,27 +751,28 @@ class StochAstic:
 			lst_idx_sell_primary > lst_idx_buy_primary and
 			lst_idx_sell_primary >= lst_idx_sell_secondry and
 			lst_idx_sell_primary > lst_idx_buy_secondry and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) <= 50 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) <= 6 and
 			(len(dataset_5M[symbol]['close']) - 1 - lst_idx_sell_primary) >= 1
 			):
 
-			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
-			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
+			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			# SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
-			zigzag = ZigZag.Find(
-									dataset = dataset_5M_real, 
-									index_first = int(signal_sell_primary['index_back'][lst_idx_sell_primary]), 
-									index_last = len(dataset_5M_real.index)
-									)
+			# zigzag = ZigZag.Find(
+			# 						dataset = dataset_5M_real, 
+			# 						index_first = int(signal_sell_primary['index_back'][lst_idx_sell_primary]), 
+			# 						index_last = len(dataset_5M_real.index)
+			# 						)
 
 			if (
 				StochAstic_calc_sell_primary[GL_Results_sell_primary['StochAstic_column_div'][0]][lst_idx_sell_primary] > StochAstic_calc_sell_primary[GL_Results_sell_primary['StochAstic_column_div'][0]][lst_idx_sell_primary + 1] and
 				StochAstic_calc_sell_primary[GL_Results_sell_primary['StochAstic_column_div'][0]][lst_idx_sell_primary] > StochAstic_calc_sell_primary[GL_Results_sell_primary['StochAstic_column_div'][0]][lst_idx_sell_primary + 2] and
 				StochAstic_calc_sell_primary[GL_Results_sell_primary['StochAstic_column_div'][0]][lst_idx_sell_primary] > StochAstic_calc_sell_primary[GL_Results_sell_primary['StochAstic_column_div'][0]][lst_idx_sell_primary - 1] and
 				StochAstic_calc_sell_primary[GL_Results_sell_primary['StochAstic_column_div'][0]][lst_idx_sell_primary] > StochAstic_calc_sell_primary[GL_Results_sell_primary['StochAstic_column_div'][0]][lst_idx_sell_primary - 2] and
-				dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_primary['index_back'][lst_idx_sell_primary]): ]) and
-				SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
-				zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
+				dataset_5M_real['high'][signal_sell_primary['index_back'][lst_idx_sell_primary]] < dataset_5M_real['high'][lst_idx_sell_primary]
+				# dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_primary['index_back'][lst_idx_sell_primary]): ]) and
+				# SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
+				# zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
 				):
 
 				print('======> last signal sell primary stochastic ',symbol)
@@ -858,27 +861,28 @@ class StochAstic:
 			lst_idx_sell_secondry > lst_idx_buy_primary and
 			lst_idx_sell_secondry > lst_idx_sell_primary and
 			lst_idx_sell_secondry > lst_idx_buy_secondry and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) <= 50 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) <= 6 and
 			(len(dataset_5M[symbol]['close']) - 1 - lst_idx_sell_secondry) >= 1
 			):
 
-			SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
-			SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
+			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
+			# SMA_25 = ind.sma(dataset_5M[symbol]['close'], length = 25)
 
-			zigzag = ZigZag.Find(
-									dataset = dataset_5M_real, 
-									index_first = int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]), 
-									index_last = len(dataset_5M_real.index)
-									)
+			# zigzag = ZigZag.Find(
+			# 						dataset = dataset_5M_real, 
+			# 						index_first = int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]), 
+			# 						index_last = len(dataset_5M_real.index)
+			# 						)
 
 			if (
 				StochAstic_calc_sell_secondry[GL_Results_sell_secondry['StochAstic_column_div'][0]][lst_idx_sell_secondry] > StochAstic_calc_sell_secondry[GL_Results_sell_secondry['StochAstic_column_div'][0]][lst_idx_sell_secondry + 1] and
 				StochAstic_calc_sell_secondry[GL_Results_sell_secondry['StochAstic_column_div'][0]][lst_idx_sell_secondry] > StochAstic_calc_sell_secondry[GL_Results_sell_secondry['StochAstic_column_div'][0]][lst_idx_sell_secondry + 2] and
 				StochAstic_calc_sell_secondry[GL_Results_sell_secondry['StochAstic_column_div'][0]][lst_idx_sell_secondry] > StochAstic_calc_sell_secondry[GL_Results_sell_secondry['StochAstic_column_div'][0]][lst_idx_sell_secondry - 1] and
 				StochAstic_calc_sell_secondry[GL_Results_sell_secondry['StochAstic_column_div'][0]][lst_idx_sell_secondry] > StochAstic_calc_sell_secondry[GL_Results_sell_secondry['StochAstic_column_div'][0]][lst_idx_sell_secondry - 2] and
-				dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]): ]) and
-				SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
-				zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
+				dataset_5M_real['high'][signal_sell_secondry['index_back'][lst_idx_sell_secondry]] > dataset_5M_real['high'][lst_idx_sell_secondry]
+				# dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]): ]) and
+				# SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
+				# zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
 				):
 			
 				print('======> last signal sell secondry stochastic ',symbol)
@@ -1061,12 +1065,12 @@ class StochAstic:
 
 		StochAstic_calc = self.calculator_StochAstic()
 
-		if 'permit' in GL_Results.columns:
-			if (
-				GL_Results['permit'][0] == True and
-				GL_Results['draw_down'][0] <= 7
-				): 
-				return GL_Results
+		# if 'permit' in GL_Results.columns:
+		# 	if (
+		# 		GL_Results['permit'][0] == True and
+		# 		GL_Results['draw_down'][0] <= 7
+		# 		): 
+		# 		return GL_Results
 
 		try:
 
