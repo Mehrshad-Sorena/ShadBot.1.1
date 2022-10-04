@@ -1070,14 +1070,14 @@ class MACD:
 
 		macd_calc = self.calculator_macd()
 
-		# if 'permit' in GL_Results.columns:
-		# 	if (
-		# 		GL_Results['permit'][0] == True and
-		# 		GL_Results['draw_down'][0] <= 7
-		# 		): 
-		# 		return GL_Results
+		if 'permit' in GL_Results.columns:
+			if (
+				GL_Results['permit'][0] == True and
+				GL_Results['draw_down'][0] <= 7
+				): 
+				return GL_Results
 
-		if True:#try:
+		try:
 
 			signal, signaltype, indicator = macd.divergence(
 															sigtype = signaltype,
@@ -1111,7 +1111,7 @@ class MACD:
 																indicator = indicator,
 																flag_savepic = flag_savepic
 																)
-		else:#except Exception as ex:
+		except Exception as ex:
 			print('Permit Error: ', ex)
 
 			signal_output = pd.DataFrame()
@@ -1120,8 +1120,8 @@ class MACD:
 		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 		# 	print('signals = ', signal_output['money'])
 
-		plt.plot(signal_output['money'])
-		plt.show()
+		# plt.plot(signal_output['money'])
+		# plt.show()
 
 		with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 			print(learning_output)
