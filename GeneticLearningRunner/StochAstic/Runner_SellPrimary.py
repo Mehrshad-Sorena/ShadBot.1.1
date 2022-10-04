@@ -54,11 +54,12 @@ def Run():
 	optimizers.dataset = parameters.elements['dataset_5M'].copy()
 	optimizers.timeframe = '5M'
 
-	optimizers.StochAsticOptimizer()
+	# optimizers.StochAsticOptimizer()
 
 	stochastic = StochAstic(parameters = parameters, config = config)
 
 	try:
+		# print(a)
 		stochastic_calc = stochastic.Genetic(
 											dataset_5M_real = dataset_5M_real,
 											dataset_5M = parameters.elements['dataset_5M'], 
