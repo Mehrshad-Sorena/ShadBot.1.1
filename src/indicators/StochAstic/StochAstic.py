@@ -1065,12 +1065,12 @@ class StochAstic:
 
 		StochAstic_calc = self.calculator_StochAstic()
 
-		# if 'permit' in GL_Results.columns:
-		# 	if (
-		# 		GL_Results['permit'][0] == True and
-		# 		GL_Results['draw_down'][0] <= 7
-		# 		): 
-		# 		return GL_Results
+		if 'permit' in GL_Results.columns:
+			if (
+				GL_Results['permit'][0] == True and
+				GL_Results['draw_down'][0] <= 7
+				): 
+				return GL_Results
 
 		try:
 
