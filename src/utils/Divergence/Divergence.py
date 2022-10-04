@@ -338,7 +338,6 @@ class Divergence:
 																					signal = 'buy_primary'
 																					).dropna().reset_index(inplace = False, drop = True)
 
-
 		dataset_5M_div = self.dataset_preparer(index = indicator_div_2)
 		indicator_div_2 = indicator_div_2[indicator_div_2['div'] == True].reset_index(inplace = False, drop = True)
 		data_div_2 = ((dataset_5M_div['low_front'].copy(deep = True)).mask(dataset_5M_div['low_front'] < dataset_5M_div['low_back'], True)).where(dataset_5M_div['low_front'] < dataset_5M_div['low_back'], False)
@@ -392,6 +391,22 @@ class Divergence:
 																									diff_extereme = 6, 
 																									signal = 'buy_primary'
 																									)).dropna().reset_index(inplace = False, drop = True)
+		symbol = self.elements['symbol']
+		for test_elm in divergences.index:
+			# print(test_elm)
+			# if divergences['low_back'][test_elm] < divergences['low_front'][test_elm]:
+			if self.elements['dataset_5M'][symbol]['low'][divergences['index'][test_elm]] > self.elements['dataset_5M'][symbol]['low'][divergences['index_back'][test_elm]]:
+				divergences = divergences.drop(index = test_elm)
+				# plt.plot(self.elements['dataset_5M']['XAUUSD_i']['low'][int(divergences['index_back'][test_elm]) - 20:100 + int(divergences['index'][test_elm])])
+				
+				# plt.plot(
+				# 		[divergences['index_back'][test_elm], divergences['index'][test_elm]],
+				# 		[self.elements['dataset_5M']['XAUUSD_i']['low'][divergences['index_back'][test_elm]], 
+				# 		self.elements['dataset_5M']['XAUUSD_i']['low'][divergences['index'][test_elm]]]
+				# 		)
+				# plt.show()
+
+		divergences = divergences.reset_index(inplace = False)
 
 		return divergences
 
@@ -519,6 +534,13 @@ class Divergence:
 																									signal = 'buy_secondry'
 																									)).dropna().reset_index(inplace = False, drop = True)
 
+		symbol = self.elements['symbol']
+		for test_elm in divergences.index:
+			if self.elements['dataset_5M'][symbol]['low'][divergences['index'][test_elm]] < self.elements['dataset_5M'][symbol]['low'][divergences['index_back'][test_elm]]:
+				divergences = divergences.drop(index = test_elm)
+
+		divergences = divergences.reset_index(inplace = False)
+
 		return divergences
 
 
@@ -645,6 +667,13 @@ class Divergence:
 																									signal = 'sell_primary'
 																									)).dropna().reset_index(inplace = False, drop = True)
 
+		symbol = self.elements['symbol']
+		for test_elm in divergences.index:
+			if self.elements['dataset_5M'][symbol]['high'][divergences['index'][test_elm]] < self.elements['dataset_5M'][symbol]['high'][divergences['index_back'][test_elm]]:
+				divergences = divergences.drop(index = test_elm)
+
+		divergences = divergences.reset_index(inplace = False)
+
 		return divergences
 
 
@@ -770,6 +799,13 @@ class Divergence:
 																									diff_extereme = 6, 
 																									signal = 'sell_secondry'
 																									)).dropna().reset_index(inplace = False, drop = True)
+
+		symbol = self.elements['symbol']
+		for test_elm in divergences.index:
+			if self.elements['dataset_5M'][symbol]['high'][divergences['index'][test_elm]] > self.elements['dataset_5M'][symbol]['high'][divergences['index_back'][test_elm]]:
+				divergences = divergences.drop(index = test_elm)
+
+		divergences = divergences.reset_index(inplace = False)
 
 		return divergences
 
