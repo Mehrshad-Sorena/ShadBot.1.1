@@ -3,9 +3,11 @@ from src.utils.DataReader.MetaTraderReader5.LoginGetData import LoginGetData as 
 from src.utils.Divergence.Config import Config as Divergence_Config
 from src.utils.Divergence.Divergence import Divergence
 from src.indicators.ZigZag import ZigZag
+import matplotlib.pyplot as plt
 import pandas_ta as ind
 import pandas as pd
 import numpy as np
+import os
 
 
 
@@ -52,6 +54,32 @@ class Tester:
 
 		dataset_5M_real = dataset_5M_real.copy(deep = True)
 
+		if signals['signal'][loc_end_5M] == 'buy_primary':
+			if dataset_5M_real['low'][signals['index_back'][loc_end_5M]] < dataset_5M_real['low'][loc_end_5M]:
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
+
+		elif signals['signal'][loc_end_5M] == 'buy_secondry':
+			if dataset_5M_real['low'][signals['index_back'][loc_end_5M]] > dataset_5M_real['low'][loc_end_5M]:
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
+
 		#Checking SMA:
 
 		SMA_50 = ind.sma(dataset_5M['close'], length = 50)
@@ -59,89 +87,67 @@ class Tester:
 
 		index_start_ZigZag = int(signals['index_back'][loc_end_5M])
 
-		if (len(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) > 1:
-			loc_end_5M_price = loc_end_5M +  min(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])
+		loc_end_5M_price = loc_end_5M
 
-			if SMA_25[loc_end_5M_price] < SMA_50[loc_end_5M_price]:
-				extereme = extereme.assign(
-										flag =  'no_flag',
-										tp_pr =  np.nan,
-										st_pr =  np.nan,
-										index_tp =  np.nan,
-										index_st = np.nan,
-										money = money,
-										time = np.nan,
-										)
-				return extereme
+		if False:#(len(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] >= SMA_50[int(signals['index_back'][loc_end_5M]) : loc_end_5M].min())[0])) > 1:
+			loc_end_5M_price = loc_end_5M +  min(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] >=SMA_50[int(signals['index_back'][loc_end_5M]) : loc_end_5M].min())[0])
 
-			zigzag = ZigZag.Find(
-									dataset = dataset_5M_real, 
-									index_first = index_start_ZigZag, 
-									index_last = loc_end_5M_price
-									)
+			# zigzag = ZigZag.Find(
+			# 						dataset = dataset_5M_real, 
+			# 						index_first = index_start_ZigZag, 
+			# 						index_last = loc_end_5M_price
+			# 						)
 
-			if zigzag.values[-2] > dataset_5M_real['low'][loc_end_5M_price]:
+			# if zigzag.values[-2] > dataset_5M_real['low'][loc_end_5M_price]:
 				
-				extereme = extereme.assign(
-										flag =  'no_flag',
-										tp_pr =  np.nan,
-										st_pr =  np.nan,
-										index_tp =  np.nan,
-										index_st = np.nan,
-										money = money,
-										time = np.nan,
-										)
-				return extereme
+			# 	extereme = extereme.assign(
+			# 							flag =  'no_flag',
+			# 							tp_pr =  np.nan,
+			# 							st_pr =  np.nan,
+			# 							index_tp =  np.nan,
+			# 							index_st = np.nan,
+			# 							money = money,
+			# 							time = np.nan,
+			# 							)
+			# 	return extereme
 
-		elif (len(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) == 1:
-			loc_end_5M_price = loc_end_5M + np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] > np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0][0]
+		elif False:#len(np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] >= SMA_50[int(signals['index_back'][loc_end_5M]) : loc_end_5M].min())[0]) == 1:
+			loc_end_5M_price = loc_end_5M + np.where(dataset_5M_real['low'][loc_end_5M: loc_end_5M + 50] >= SMA_50[int(signals['index_back'][loc_end_5M]) : loc_end_5M].min())[0][0]
 
-			if SMA_25[loc_end_5M_price] < SMA_50[loc_end_5M_price]:
-				extereme = extereme.assign(
-										flag =  'no_flag',
-										tp_pr =  np.nan,
-										st_pr =  np.nan,
-										index_tp =  np.nan,
-										index_st = np.nan,
-										money = money,
-										time = np.nan,
-										)
-				return extereme
+			# zigzag = ZigZag.Find(
+			# 						dataset = dataset_5M_real, 
+			# 						index_first = index_start_ZigZag, 
+			# 						index_last = loc_end_5M_price
+			# 						)
 
-			zigzag = ZigZag.Find(
-									dataset = dataset_5M_real, 
-									index_first = index_start_ZigZag, 
-									index_last = loc_end_5M_price
-									)
-
-			if zigzag.values[-2] > dataset_5M_real['low'][loc_end_5M_price]:
+			# if zigzag.values[-2] > dataset_5M_real['low'][loc_end_5M_price]:
 				
-				extereme = extereme.assign(
-										flag =  'no_flag',
-										tp_pr =  np.nan,
-										st_pr =  np.nan,
-										index_tp =  np.nan,
-										index_st = np.nan,
-										money = money,
-										time = np.nan,
-										)
-				return extereme
+			# 	extereme = extereme.assign(
+			# 							flag =  'no_flag',
+			# 							tp_pr =  np.nan,
+			# 							st_pr =  np.nan,
+			# 							index_tp =  np.nan,
+			# 							index_st = np.nan,
+			# 							money = money,
+			# 							time = np.nan,
+			# 							)
+			# 	return extereme
 
-		else:
-			extereme = extereme.assign(
-										flag =  'no_flag',
-										tp_pr =  np.nan,
-										st_pr =  np.nan,
-										index_tp =  np.nan,
-										index_st = np.nan,
-										money = money,
-										time = np.nan,
-										)
-			return extereme
+		# else:
+		# 	extereme = extereme.assign(
+		# 								flag =  'no_flag',
+		# 								tp_pr =  np.nan,
+		# 								st_pr =  np.nan,
+		# 								index_tp =  np.nan,
+		# 								index_st = np.nan,
+		# 								money = money,
+		# 								time = np.nan,
+		# 								)
+		# 	return extereme
 
 		#////////////////////////////////
 
-		diff_pr_top = (((extereme['high_upper'][loc_end_5M]) - dataset_5M['high'][loc_end_5M])/dataset_5M['high'][loc_end_5M]) * 100
+		diff_pr_top = (((extereme['high_upper'][loc_end_5M]) - dataset_5M['high'][loc_end_5M_price])/dataset_5M['high'][loc_end_5M_price]) * 100
 		diff_pr_down = ((dataset_5M['low'][loc_end_5M] - (extereme['low_lower'][loc_end_5M]))/dataset_5M['low'][loc_end_5M]) * 100
 
 		# print('top = ', diff_pr_top)
@@ -153,11 +159,11 @@ class Tester:
 		tp_percent_min = self.elements['tp_percent_min']
 		tp_percent_max = self.elements['tp_percent_max']
 
-		# st_percent_min = 0.22
-		# tp_percent_min = 0.2
+		# st_percent_min = 0.11 #0.37
+		# st_percent_max = 0.1 #0.79
 
-		# st_percent_max = 1.24
-		# tp_percent_max = 1.01
+		# tp_percent_min = 0.13
+		# tp_percent_max = 0.12
 
 		# flaglearn = False
 
@@ -173,9 +179,9 @@ class Tester:
 
 
 			diff_pr_top = tp_percent_min
-			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(tp_percent_min/100))
-			extereme['high_mid'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(tp_percent_min/100))
-			extereme['high_lower'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(tp_percent_min/100))
+			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(tp_percent_min/100))
+			extereme['high_mid'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(tp_percent_min/100))
+			extereme['high_lower'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(tp_percent_min/100))
 
 			extereme['power_high_upper'][loc_end_5M] = 0
 			extereme['power_high_mid'][loc_end_5M] = 0
@@ -189,7 +195,7 @@ class Tester:
 
 			if diff_pr_top < tp_percent_min:
 				diff_pr_top = tp_percent_min
-				extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(tp_percent_min/100))
+				extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(tp_percent_min/100))
 
 		if diff_pr_down > st_percent_max:
 			diff_pr_down = st_percent_max
@@ -197,7 +203,7 @@ class Tester:
 		
 		if diff_pr_top > tp_percent_max:
 			diff_pr_top = tp_percent_max
-			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M] * (1+(tp_percent_max/100))
+			extereme['high_upper'][loc_end_5M] = dataset_5M['high'][loc_end_5M_price] * (1+(tp_percent_max/100))
 
 		if (
 			dataset_5M_real['high'][loc_end_5M_price] * (1 + spred) >= extereme['high_upper'][loc_end_5M] or
@@ -436,6 +442,87 @@ class Tester:
 											money = money,
 											time = np.nan,
 											)
+
+		if False:#self.flag_pic_save_tester == True:
+
+			path_indicator = (
+						'pics/' +
+						#signals['indicator_name'][signals['index'].max()] +  '/' + 
+						signals['signal'][signals['index'].max()] + '/' + 
+						#signals['symbol'][signals['index'].max()] + '/' +
+						extereme['flag'][loc_end_5M] + '/' 
+						#signals['indicator_name'][signals['index'].max()] + '/'
+						)
+
+			if not os.path.exists(path_indicator):
+				os.makedirs(path_indicator)
+				path_indicator = path_indicator + str(loc_end_5M)
+			else:
+				path_indicator = path_indicator + str(loc_end_5M)
+
+			if extereme['flag'][loc_end_5M] != 'no_flag':
+				if extereme['flag'][loc_end_5M] == 'tp':
+					index_end = index_tp
+				else:
+					index_end = index_st
+
+				# print(signals.columns)
+
+				# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+				# print(indicator[signals['column_div']])
+
+				index_start = int(signals['index_back'][loc_end_5M])
+
+				fig, (ax0, ax1) = plt.subplots(2)
+
+				ax0.plot(dataset_5M_real.index[index_start - 20:index_end + 20], dataset_5M_real['high'][index_start - 20:index_end + 20], c = 'green')
+				ax0.plot(dataset_5M_real.index[index_start - 20:index_end + 20], dataset_5M_real['low'][index_start - 20:index_end + 20], c = 'green')
+				ax0.plot(SMA_50[index_start - 20:index_end + 20], c = 'r')
+				ax0.plot(SMA_25[index_start - 20:index_end + 20], c = 'b')
+				ax0.axhline(y = extereme['high_upper'][loc_end_5M])
+				ax0.axhline(y = extereme['low_lower'][loc_end_5M])
+
+				# ax0.plot([signals['index_back'][loc_end_5M], loc_end_5M], 
+				# 	[signals['low_back'][loc_end_5M], signals['low_front'][loc_end_5M]], c = 'r')
+
+				if False:#dataset_5M_real['low'][signals['index_back'][loc_end_5M]] < dataset_5M_real['low'][loc_end_5M]:
+					# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+					# 	print(signals)
+					print(signals['index_back'][loc_end_5M])
+					print(loc_end_5M)
+					print('real back = ', dataset_5M_real['low'][signals['index_back'][loc_end_5M]])
+					print('real front = ', dataset_5M_real['low'][loc_end_5M])
+
+					print('filter back = ', dataset_5M['low'][signals['index_back'][loc_end_5M]])
+					print('filter front = ', dataset_5M['low'][loc_end_5M])
+
+				ax0.plot([signals['index_back'][loc_end_5M], loc_end_5M], 
+					[dataset_5M_real['low'][signals['index_back'][loc_end_5M]], dataset_5M_real['low'][loc_end_5M]], c = 'r')
+
+				ax0.axvline(x = loc_end_5M_price, c = 'purple', linestyle = '-.')
+
+				ax0.axvline(x = index_end, c = 'pink', linestyle = '-.')
+
+				
+				ax1.axvline(x = index_start, c = 'r')
+				ax1.axvline(x = loc_end_5M, c = 'r')
+				ax1.axvline(x = loc_end_5M_price, c = 'purple', linestyle = '-.')
+
+				index_start = index_start - indicator[signals['column_div']].index[0]
+				index_end = index_end - indicator[signals['column_div']].index[0]
+
+				ax1.plot(indicator[signals['column_div']][index_start - 20:index_end + 20])
+
+				ax1.plot([signals['index_back'][loc_end_5M], loc_end_5M], 
+					[signals['indicator_back'][loc_end_5M], signals['indicator_front'][loc_end_5M]], c = 'r')
+
+				plt.title(label = extereme['flag'][loc_end_5M])
+				plt.savefig(path_indicator, dpi=600, bbox_inches='tight')
+
+				plt.figure().clear()
+				plt.close('all')
+				plt.cla()
+				plt.clf()
 		
 		if flag_savepic == True:
 			divergence_config = Divergence_Config()
@@ -464,6 +551,32 @@ class Tester:
 
 		dataset_5M_real = dataset_5M_real.copy(deep = True)
 
+		if signals['signal'][loc_end_5M] == 'sell_primary':
+			if dataset_5M_real['high'][signals['index_back'][loc_end_5M]] > dataset_5M_real['high'][loc_end_5M]:
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
+
+		elif signals['signal'][loc_end_5M] == 'sell_secondry':
+			if dataset_5M_real['high'][signals['index_back'][loc_end_5M]] < dataset_5M_real['high'][loc_end_5M]:
+				extereme = extereme.assign(
+										flag =  'no_flag',
+										tp_pr =  np.nan,
+										st_pr =  np.nan,
+										index_tp =  np.nan,
+										index_st = np.nan,
+										money = money,
+										time = np.nan,
+										)
+				return extereme
+
 
 		#Checking SMA:
 
@@ -472,7 +585,9 @@ class Tester:
 
 		index_start_ZigZag = int(signals['index_back'][loc_end_5M])
 
-		if (len(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) > 1:
+		loc_end_5M_price = loc_end_5M
+
+		if False:#(len(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) > 1:
 			loc_end_5M_price = loc_end_5M +  min(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])
 
 			if SMA_25[loc_end_5M_price] > SMA_50[loc_end_5M_price]:
@@ -493,20 +608,20 @@ class Tester:
 									index_last = loc_end_5M_price
 									)
 
-			if zigzag.values[-2] < dataset_5M_real['high'][loc_end_5M_price]:
+			# if zigzag.values[-2] < dataset_5M_real['high'][loc_end_5M_price]:
 				
-				extereme = extereme.assign(
-										flag =  'no_flag',
-										tp_pr =  np.nan,
-										st_pr =  np.nan,
-										index_tp =  np.nan,
-										index_st = np.nan,
-										money = money,
-										time = np.nan,
-										)
-				return extereme
+			# 	extereme = extereme.assign(
+			# 							flag =  'no_flag',
+			# 							tp_pr =  np.nan,
+			# 							st_pr =  np.nan,
+			# 							index_tp =  np.nan,
+			# 							index_st = np.nan,
+			# 							money = money,
+			# 							time = np.nan,
+			# 							)
+			# 	return extereme
 
-		elif (len(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) == 1:
+		elif False:#(len(np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0])) == 1:
 			loc_end_5M_price = loc_end_5M + np.where(dataset_5M_real['high'][loc_end_5M: loc_end_5M + 50] < np.mean(SMA_50[int(signals['index_back'][loc_end_5M]): loc_end_5M]))[0][0]
 
 			if SMA_25[loc_end_5M_price] > SMA_50[loc_end_5M_price]:
@@ -540,17 +655,17 @@ class Tester:
 										)
 				return extereme
 
-		else:
-			extereme = extereme.assign(
-										flag =  'no_flag',
-										tp_pr =  np.nan,
-										st_pr =  np.nan,
-										index_tp =  np.nan,
-										index_st = np.nan,
-										money = money,
-										time = np.nan,
-										)
-			return extereme
+		# else:
+		# 	extereme = extereme.assign(
+		# 								flag =  'no_flag',
+		# 								tp_pr =  np.nan,
+		# 								st_pr =  np.nan,
+		# 								index_tp =  np.nan,
+		# 								index_st = np.nan,
+		# 								money = money,
+		# 								time = np.nan,
+		# 								)
+		# 	return extereme
 
 		#////////////////////////////////
 
@@ -564,6 +679,11 @@ class Tester:
 		tp_percent_min = self.elements['tp_percent_min']
 		tp_percent_max = self.elements['tp_percent_max']
 		
+		# st_percent_min = 0.07
+		# st_percent_max = 0.1
+
+		# tp_percent_min = 0.18
+		# tp_percent_max = 0.21
 
 		if extereme.dropna().empty == True:
 
@@ -840,6 +960,87 @@ class Tester:
 											money = money,
 											time = np.nan,
 											)
+
+		if False:#self.flag_pic_save_tester == True:
+
+			path_indicator = (
+						'pics/' +
+						#signals['indicator_name'][signals['index'].max()] +  '/' + 
+						signals['signal'][signals['index'].max()] + '/' + 
+						#signals['symbol'][signals['index'].max()] + '/' +
+						extereme['flag'][loc_end_5M] + '/' 
+						#signals['indicator_name'][signals['index'].max()] + '/'
+						)
+
+			if not os.path.exists(path_indicator):
+				os.makedirs(path_indicator)
+				path_indicator = path_indicator + str(loc_end_5M)
+			else:
+				path_indicator = path_indicator + str(loc_end_5M)
+
+			if extereme['flag'][loc_end_5M] != 'no_flag':
+				if extereme['flag'][loc_end_5M] == 'tp':
+					index_end = index_tp
+				else:
+					index_end = index_st
+
+				# print(signals.columns)
+
+				# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+				# print(indicator[signals['column_div']])
+
+				index_start = int(signals['index_back'][loc_end_5M])
+
+				fig, (ax0, ax1) = plt.subplots(2)
+
+				ax0.plot(dataset_5M_real.index[index_start - 20:index_end + 20], dataset_5M_real['high'][index_start - 20:index_end + 20], c = 'green')
+				ax0.plot(dataset_5M_real.index[index_start - 20:index_end + 20], dataset_5M_real['low'][index_start - 20:index_end + 20], c = 'green')
+				ax0.plot(SMA_50[index_start - 20:index_end + 20], c = 'r')
+				ax0.plot(SMA_25[index_start - 20:index_end + 20], c = 'b')
+				ax0.axhline(y = extereme['high_upper'][loc_end_5M])
+				ax0.axhline(y = extereme['low_lower'][loc_end_5M])
+
+				# ax0.plot([signals['index_back'][loc_end_5M], loc_end_5M], 
+				# 	[signals['low_back'][loc_end_5M], signals['low_front'][loc_end_5M]], c = 'r')
+
+				if False:#dataset_5M_real['low'][signals['index_back'][loc_end_5M]] < dataset_5M_real['low'][loc_end_5M]:
+					# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+					# 	print(signals)
+					print(signals['index_back'][loc_end_5M])
+					print(loc_end_5M)
+					print('real back = ', dataset_5M_real['low'][signals['index_back'][loc_end_5M]])
+					print('real front = ', dataset_5M_real['low'][loc_end_5M])
+
+					print('filter back = ', dataset_5M['low'][signals['index_back'][loc_end_5M]])
+					print('filter front = ', dataset_5M['low'][loc_end_5M])
+
+				ax0.plot([signals['index_back'][loc_end_5M], loc_end_5M], 
+					[dataset_5M_real['high'][signals['index_back'][loc_end_5M]], dataset_5M_real['high'][loc_end_5M]], c = 'r')
+
+				ax0.axvline(x = loc_end_5M_price, c = 'purple', linestyle = '-.')
+
+				ax0.axvline(x = index_end, c = 'pink', linestyle = '-.')
+
+				
+				ax1.axvline(x = index_start, c = 'r')
+				ax1.axvline(x = loc_end_5M, c = 'r')
+				ax1.axvline(x = loc_end_5M_price, c = 'purple', linestyle = '-.')
+
+				index_start = index_start - indicator[signals['column_div']].index[0]
+				index_end = index_end - indicator[signals['column_div']].index[0]
+
+				ax1.plot(indicator[signals['column_div']][index_start - 20:index_end + 20])
+
+				ax1.plot([signals['index_back'][loc_end_5M], loc_end_5M], 
+					[signals['indicator_back'][loc_end_5M], signals['indicator_front'][loc_end_5M]], c = 'r')
+
+				plt.title(label = extereme['flag'][loc_end_5M])
+				plt.savefig(path_indicator, dpi=600, bbox_inches='tight')
+
+				plt.figure().clear()
+				plt.close('all')
+				plt.cla()
+				plt.clf()
 
 		if flag_savepic == True:
 			divergence_config = Divergence_Config()
