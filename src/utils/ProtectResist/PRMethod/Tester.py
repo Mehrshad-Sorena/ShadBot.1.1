@@ -580,8 +580,8 @@ class Tester:
 
 		#Checking SMA:
 
-		SMA_50 = ind.sma(dataset_5M['close'], length = 50)
-		SMA_25 = ind.sma(dataset_5M['close'], length = 25)
+		# SMA_50 = ind.sma(dataset_5M['close'], length = 50)
+		# SMA_25 = ind.sma(dataset_5M['close'], length = 25)
 
 		index_start_ZigZag = int(signals['index_back'][loc_end_5M])
 
@@ -728,7 +728,7 @@ class Tester:
 		if (
 			dataset_5M_real['high'][loc_end_5M_price] * (1 + spred) >= extereme['high_upper'][loc_end_5M] or
 			dataset_5M_real['low'][loc_end_5M_price] <= extereme['low_lower'][loc_end_5M] #or
-			#extereme.dropna().empty == True
+			# extereme.dropna().empty == True
 			):
 			extereme = extereme.assign(
 										flag =  'no_flag',
@@ -1056,7 +1056,7 @@ class Tester:
 								res_pro_low = extereme['low_lower'][loc_end_5M],
 								flag_savepic = flag_savepic
 								)
-
+		# print(extereme)
 		return extereme
 
 
