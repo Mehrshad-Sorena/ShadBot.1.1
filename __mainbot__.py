@@ -43,6 +43,8 @@ def news_threaded():
 def Run():
 	# Schedules the job_function to be executed Monday through Friday at between 12-16 at specific times. 
 	minute_trader = '0,5,10,15,20,25,30,35,40,45,50,55'
+	#01,02,05,18,19,21,22,23
+	hour_trader = '00,03,04,06,07,08,09,10,11,12,13,14,15,16,17,20'
 	days = 'sat,sun,mon,tue,wed,thu,fri'
 
 	minute_news = '10'
@@ -52,9 +54,9 @@ def Run():
 	trader_rsi_div_threaded()
 	trader_stochastic_div_threaded()
 
-	scheduler_trader_macd_div.add_job(func=trader_macd_div_threaded, trigger='cron', day_of_week=days, hour='00-23', minute=minute_trader, timezone='UTC')
-	scheduler_trader_stochastic_div.add_job(func=trader_stochastic_div_threaded, trigger='cron', day_of_week=days, hour='00-23', minute=minute_trader, timezone='UTC')
-	scheduler_trader_rsi_div.add_job(func=trader_rsi_div_threaded, trigger='cron', day_of_week=days, hour='00-23', minute=minute_trader, timezone='UTC')
+	scheduler_trader_macd_div.add_job(func=trader_macd_div_threaded, trigger='cron', day_of_week=days, hour=hour_trader, minute=minute_trader, timezone='UTC')
+	scheduler_trader_stochastic_div.add_job(func=trader_stochastic_div_threaded, trigger='cron', day_of_week=days, hour=hour_trader, minute=minute_trader, timezone='UTC')
+	scheduler_trader_rsi_div.add_job(func=trader_rsi_div_threaded, trigger='cron', day_of_week=days, hour=hour_trader, minute=minute_trader, timezone='UTC')
 
 	scheduler_news.add_job(func=news_threaded, trigger='cron', day_of_week='mon-fri', hour=hour_news, minute=minute_news, timezone='UTC')
 	# Start the scheduler
