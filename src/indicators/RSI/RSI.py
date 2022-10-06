@@ -253,7 +253,7 @@ class RSI:
 		return signal_output, learning_output
 
 
-	@stTime
+	#@stTime
 	def LastSignal(self,dataset_5M, dataset_1H, symbol):
 
 		dataset_5M_real = copy.deepcopy(dataset_5M)
@@ -504,11 +504,11 @@ class RSI:
 
 		#*****************************
 
-		print('lst_idx_buy_primary rsi = ', lst_idx_buy_primary)
-		print('lst_idx_buy_secondry rsi = ', lst_idx_buy_secondry)
-		print('lst_idx_sell_primary rsi = ', lst_idx_sell_primary)
-		print('lst_idx_sell_secondry rsi = ', lst_idx_sell_secondry)
-		print('len data = ', len(dataset_5M[symbol]['close']) - 1)
+		# print('lst_idx_buy_primary rsi = ', lst_idx_buy_primary)
+		# print('lst_idx_buy_secondry rsi = ', lst_idx_buy_secondry)
+		# print('lst_idx_sell_primary rsi = ', lst_idx_sell_primary)
+		# print('lst_idx_sell_secondry rsi = ', lst_idx_sell_secondry)
+		# print('len data = ', len(dataset_5M[symbol]['close']) - 1)
 
 		#***** Last Signal:
 
@@ -540,9 +540,9 @@ class RSI:
 				# zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
 				):
 
-				print('======> last signal buy primary rsi ',symbol)
-				print('dataset length: ',len(dataset_5M[symbol]['close']))
-				print('last index: ',lst_idx_buy_primary)
+				# print('======> last signal buy primary rsi ',symbol)
+				# print('dataset length: ',len(dataset_5M[symbol]['close']))
+				# print('last index: ',lst_idx_buy_primary)
 				
 
 				if lst_idx_buy_primary != 0:
@@ -567,8 +567,8 @@ class RSI:
 
 					if (res_pro_buy_primary.empty == False):
 
-						diff_pr_top_buy_primary = (((res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)]) - dataset_5M[symbol]['high'][int(lst_idx_buy_primary)])/dataset_5M[symbol]['high'][int(lst_idx_buy_primary)]) * 100
-						diff_pr_down_buy_primary = ((dataset_5M[symbol]['low'][int(lst_idx_buy_primary)] - (res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)]))/dataset_5M[symbol]['low'][int(lst_idx_buy_primary)]) * 100
+						diff_pr_top_buy_primary = (((res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)]) - dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)])/dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)]) * 100
+						diff_pr_down_buy_primary = ((dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)] - (res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)]))/dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)]) * 100
 
 						# if type(diff_pr_down_buy_primary) is np.ndarray:
 						# 	res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary[0]/100))
@@ -577,11 +577,11 @@ class RSI:
 
 						if diff_pr_top_buy_primary > pr_parameters_buy_primary.elements['tp_percent_max']:
 							diff_pr_top_buy_primary = pr_parameters_buy_primary.elements['tp_percent_max']
-							res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M[symbol]['high'][int(lst_idx_buy_primary)]*(1+(diff_pr_top_buy_primary/100))
+							res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)]*(1+(diff_pr_top_buy_primary/100))
 
 						if diff_pr_down_buy_primary > pr_parameters_buy_primary.elements['st_percent_max']:
 							diff_pr_down_buy_primary = pr_parameters_buy_primary.elements['st_percent_max']
-							res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary/100))
+							res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary/100))
 
 
 						resist_buy = (res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)])
@@ -595,10 +595,10 @@ class RSI:
 						res_pro_buy_primary['low_lower'] = np.nan
 
 						diff_pr_top_buy_primary = pr_parameters_buy_primary.elements['tp_percent_min']
-						res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M[symbol]['high'][int(lst_idx_buy_primary)]*(1+(diff_pr_top_buy_primary/100))
+						res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)]*(1+(diff_pr_top_buy_primary/100))
 
 						diff_pr_down_buy_primary = pr_parameters_buy_primary.elements['st_percent_min']
-						res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary/100))
+						res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary/100))
 
 						resist_buy = (res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)])
 						protect_buy = (res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)])
@@ -656,9 +656,9 @@ class RSI:
 				# zigzag.values[-2] < dataset_5M_real['low'].iloc[-1]
 				):
 
-				print('======> last signal buy secondry rsi ',symbol)
-				print('dataset length: ',len(dataset_5M[symbol]['close']))
-				print('last index: ',lst_idx_buy_secondry)
+				# print('======> last signal buy secondry rsi ',symbol)
+				# print('dataset length: ',len(dataset_5M[symbol]['close']))
+				# print('last index: ',lst_idx_buy_secondry)
 				
 
 
@@ -683,8 +683,8 @@ class RSI:
 
 					if (res_pro_buy_secondry.empty == False):
 
-						diff_pr_top_buy_secondry = (((res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)]) - dataset_5M[symbol]['high'][int(lst_idx_buy_secondry)])/dataset_5M[symbol]['high'][int(lst_idx_buy_secondry)]) * 100
-						diff_pr_down_buy_secondry = ((dataset_5M[symbol]['low'][int(lst_idx_buy_secondry)] - (res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)]))/dataset_5M[symbol]['low'][int(lst_idx_buy_secondry)]) * 100
+						diff_pr_top_buy_secondry = (((res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)]) - dataset_5M_real[symbol]['high'][int(lst_idx_buy_secondry)])/dataset_5M_real[symbol]['high'][int(lst_idx_buy_secondry)]) * 100
+						diff_pr_down_buy_secondry = ((dataset_5M_real[symbol]['low'][int(lst_idx_buy_secondry)] - (res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)]))/dataset_5M_real[symbol]['low'][int(lst_idx_buy_secondry)]) * 100
 
 						# if type(diff_pr_down_buy_primary) is np.ndarray:
 						# 	res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary[0]/100))
@@ -693,11 +693,11 @@ class RSI:
 
 						if diff_pr_top_buy_secondry > pr_parameters_buy_secondry.elements['tp_percent_max']:
 							diff_pr_top_buy_secondry = pr_parameters_buy_secondry.elements['tp_percent_max']
-							res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)] = dataset_5M[symbol]['high'][int(lst_idx_buy_secondry)]*(1+(diff_pr_top_buy_secondry/100))
+							res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)] = dataset_5M_real[symbol]['high'][int(lst_idx_buy_secondry)]*(1+(diff_pr_top_buy_secondry/100))
 
 						if diff_pr_down_buy_secondry > pr_parameters_buy_secondry.elements['st_percent_max']:
 							diff_pr_down_buy_secondry = pr_parameters_buy_secondry.elements['st_percent_max']
-							res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)] = dataset_5M[symbol]['low'][int(lst_idx_buy_secondry)]*(1-(diff_pr_down_buy_secondry/100))
+							res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)] = dataset_5M_real[symbol]['low'][int(lst_idx_buy_secondry)]*(1-(diff_pr_down_buy_secondry/100))
 
 
 						resist_buy = (res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)])
@@ -712,10 +712,10 @@ class RSI:
 						res_pro_buy_secondry['low_lower'] = np.nan
 
 						diff_pr_top_buy_secondry = pr_parameters_buy_secondry.elements['tp_percent_min']
-						res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)] = dataset_5M[symbol]['high'][int(lst_idx_buy_secondry)]*(1+(diff_pr_top_buy_secondry/100))
+						res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)] = dataset_5M_real[symbol]['high'][int(lst_idx_buy_secondry)]*(1+(diff_pr_top_buy_secondry/100))
 
 						diff_pr_down_buy_secondry = pr_parameters_buy_secondry.elements['st_percent_min']
-						res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)] = dataset_5M[symbol]['low'][int(lst_idx_buy_secondry)]*(1-(diff_pr_down_buy_secondry/100))
+						res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)] = dataset_5M_real[symbol]['low'][int(lst_idx_buy_secondry)]*(1-(diff_pr_down_buy_secondry/100))
 
 
 						resist_buy = (res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)])
@@ -773,9 +773,9 @@ class RSI:
 				# zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
 				):
 
-				print('======> last signal sell primary rsi ',symbol)
-				print('dataset length: ',len(dataset_5M[symbol]['close']))
-				print('last index: ',lst_idx_sell_primary)
+				# print('======> last signal sell primary rsi ',symbol)
+				# print('dataset length: ',len(dataset_5M[symbol]['close']))
+				# print('last index: ',lst_idx_sell_primary)
 				
 
 				if lst_idx_sell_primary != 0:
@@ -800,17 +800,17 @@ class RSI:
 
 					if (res_pro_sell_primary.empty == False):
 
-						diff_pr_top_sell_primary = (((res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) - dataset_5M[symbol]['high'][int(lst_idx_sell_primary)])/dataset_5M[symbol]['high'][int(lst_idx_sell_primary)]) * 100
-						diff_pr_down_sell_primary = ((dataset_5M[symbol]['low'][int(lst_idx_sell_primary)] - (res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]))/dataset_5M[symbol]['low'][int(lst_idx_sell_primary)]) * 100
+						diff_pr_top_sell_primary = (((res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) - dataset_5M_real[symbol]['high'][int(lst_idx_sell_primary)])/dataset_5M_real[symbol]['high'][int(lst_idx_sell_primary)]) * 100
+						diff_pr_down_sell_primary = ((dataset_5M_real[symbol]['low'][int(lst_idx_sell_primary)] - (res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]))/dataset_5M_real[symbol]['low'][int(lst_idx_sell_primary)]) * 100
 
 
 						if diff_pr_top_sell_primary > pr_parameters_sell_primary.elements['st_percent_max']:
 							diff_pr_top_sell_primary = pr_parameters_sell_primary.elements['st_percent_max']
-							(res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) = dataset_5M[symbol]['high'][int(lst_idx_sell_primary)]*(1+(diff_pr_top_sell_primary/100))
+							(res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) = dataset_5M_real[symbol]['high'][int(lst_idx_sell_primary)]*(1+(diff_pr_top_sell_primary/100))
 
 						if diff_pr_down_sell_primary > pr_parameters_sell_primary.elements['tp_percent_max']:
 							diff_pr_down_sell_primary = pr_parameters_sell_primary.elements['tp_percent_max']
-							(res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]) = dataset_5M[symbol]['low'][int(lst_idx_sell_primary)]*(1-(diff_pr_down_sell_primary/100))
+							(res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]) = dataset_5M_real[symbol]['low'][int(lst_idx_sell_primary)]*(1-(diff_pr_down_sell_primary/100))
 							
 
 						resist_sell = (res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)])
@@ -825,10 +825,10 @@ class RSI:
 						res_pro_sell_primary['low_lower'] = np.nan
 
 						diff_pr_top_sell_primary = pr_parameters_sell_primary.elements['st_percent_min']
-						(res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) = dataset_5M[symbol]['high'][int(lst_idx_sell_primary)]*(1+(diff_pr_top_sell_primary/100))
+						(res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) = dataset_5M_real[symbol]['high'][int(lst_idx_sell_primary)]*(1+(diff_pr_top_sell_primary/100))
 
 						diff_pr_down_sell_primary = pr_parameters_sell_primary.elements['tp_percent_min']
-						(res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]) = dataset_5M[symbol]['low'][int(lst_idx_sell_primary)]*(1-(diff_pr_down_sell_primary/100))
+						(res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]) = dataset_5M_real[symbol]['low'][int(lst_idx_sell_primary)]*(1-(diff_pr_down_sell_primary/100))
 							
 						resist_sell = (res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)])
 						protect_sell = (res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)])
@@ -884,9 +884,9 @@ class RSI:
 				# zigzag.values[-2] > dataset_5M_real['high'].iloc[-1]
 				):
 
-				print('======> last signal sell secondry rsi ',symbol)
-				print('dataset length: ',len(dataset_5M[symbol]['close']))
-				print('last index: ',lst_idx_sell_secondry)
+				# print('======> last signal sell secondry rsi ',symbol)
+				# print('dataset length: ',len(dataset_5M[symbol]['close']))
+				# print('last index: ',lst_idx_sell_secondry)
 
 				if lst_idx_sell_secondry != 0:
 
@@ -910,17 +910,17 @@ class RSI:
 
 					if (res_pro_sell_secondry.empty == False):
 
-						diff_pr_top_sell_secondry = (((res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) - dataset_5M[symbol]['high'][int(lst_idx_sell_secondry)])/dataset_5M[symbol]['high'][int(lst_idx_sell_secondry)]) * 100
-						diff_pr_down_sell_secondry = ((dataset_5M[symbol]['low'][int(lst_idx_sell_secondry)] - (res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]))/dataset_5M[symbol]['low'][int(lst_idx_sell_secondry)]) * 100
+						diff_pr_top_sell_secondry = (((res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) - dataset_5M_real[symbol]['high'][int(lst_idx_sell_secondry)])/dataset_5M_real[symbol]['high'][int(lst_idx_sell_secondry)]) * 100
+						diff_pr_down_sell_secondry = ((dataset_5M_real[symbol]['low'][int(lst_idx_sell_secondry)] - (res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]))/dataset_5M_real[symbol]['low'][int(lst_idx_sell_secondry)]) * 100
 
 
 						if diff_pr_top_sell_secondry > pr_parameters_sell_secondry.elements['st_percent_max']:
 							diff_pr_top_sell_secondry = pr_parameters_sell_secondry.elements['st_percent_max']
-							(res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) = dataset_5M[symbol]['high'][int(lst_idx_sell_secondry)]*(1+(diff_pr_top_sell_secondry/100))
+							(res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) = dataset_5M_real[symbol]['high'][int(lst_idx_sell_secondry)]*(1+(diff_pr_top_sell_secondry/100))
 
 						if diff_pr_down_sell_secondry > pr_parameters_sell_secondry.elements['tp_percent_max']:
 							diff_pr_down_sell_secondry = pr_parameters_sell_secondry.elements['tp_percent_max']
-							(res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]) = dataset_5M[symbol]['low'][int(lst_idx_sell_secondry)]*(1-(diff_pr_down_sell_secondry/100))
+							(res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]) = dataset_5M_real[symbol]['low'][int(lst_idx_sell_secondry)]*(1-(diff_pr_down_sell_secondry/100))
 							
 
 						resist_sell = (res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)])
@@ -935,10 +935,10 @@ class RSI:
 						res_pro_sell_secondry['low_lower'] = np.nan
 						
 						diff_pr_top_sell_secondry = pr_parameters_sell_secondry.elements['st_percent_min']
-						(res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) = dataset_5M[symbol]['high'][int(lst_idx_sell_secondry)]*(1+(diff_pr_top_sell_secondry/100))
+						(res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) = dataset_5M_real[symbol]['high'][int(lst_idx_sell_secondry)]*(1+(diff_pr_top_sell_secondry/100))
 
 						diff_pr_down_sell_secondry = pr_parameters_sell_secondry.elements['tp_percent_min']
-						(res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]) = dataset_5M[symbol]['low'][int(lst_idx_sell_secondry)]*(1-(diff_pr_down_sell_secondry/100))
+						(res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]) = dataset_5M_real[symbol]['low'][int(lst_idx_sell_secondry)]*(1-(diff_pr_down_sell_secondry/100))
 							
 						resist_sell = (res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)])
 						protect_sell = (res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)])
@@ -1050,6 +1050,8 @@ class RSI:
 									 																				signalpriority = signalpriority
 									 																				)
 
+		pr_config.cfg['Tester_flag_realtest'] = True
+
 		ind_config = indicator_config()
 		rsi = Divergence(parameters = ind_parameters, config = ind_config)
 
@@ -1064,12 +1066,12 @@ class RSI:
 
 		rsi_calc = self.calculator_rsi()
 
-		if 'permit' in GL_Results.columns:
-			if (
-				GL_Results['permit'][0] == True and
-				GL_Results['draw_down'][0] <= 7
-				): 
-				return GL_Results
+		# if 'permit' in GL_Results.columns:
+		# 	if (
+		# 		GL_Results['permit'][0] == True and
+		# 		GL_Results['draw_down'][0] <= 7
+		# 		): 
+		# 		return GL_Results
 
 		try:
 
@@ -1113,6 +1115,257 @@ class RSI:
 
 		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 		# 	print('signals = ', signal_output)
+
+		hour_st_0 = 0
+		hour_st_1 = 0
+		hour_st_2 = 0
+		hour_st_3 = 0
+		hour_st_4 = 0
+		hour_st_5 = 0
+		hour_st_6 = 0
+		hour_st_7 = 0
+		hour_st_8 = 0
+		hour_st_9 = 0
+		hour_st_10 = 0
+		hour_st_11 = 0
+		hour_st_12 = 0
+		hour_st_13 = 0
+		hour_st_14 = 0
+		hour_st_15 = 0
+		hour_st_16 = 0
+		hour_st_17 = 0
+		hour_st_18 = 0
+		hour_st_19 = 0
+		hour_st_20 = 0
+		hour_st_21 = 0
+		hour_st_22 = 0
+		hour_st_23 = 0
+
+		hour_tp_0 = 0
+		hour_tp_1 = 0
+		hour_tp_2 = 0
+		hour_tp_3 = 0
+		hour_tp_4 = 0
+		hour_tp_5 = 0
+		hour_tp_6 = 0
+		hour_tp_7 = 0
+		hour_tp_8 = 0
+		hour_tp_9 = 0
+		hour_tp_10 = 0
+		hour_tp_11 = 0
+		hour_tp_12 = 0
+		hour_tp_13 = 0
+		hour_tp_14 = 0
+		hour_tp_15 = 0
+		hour_tp_16 = 0
+		hour_tp_17 = 0
+		hour_tp_18 = 0
+		hour_tp_19 = 0
+		hour_tp_20 = 0
+		hour_tp_21 = 0
+		hour_tp_22 = 0
+		hour_tp_23 = 0
+
+		for elm in signal_output.index:
+			if signal_output['flag'][elm] == 'st':
+
+				if int(signal_output['time'][elm].hour) == 0:
+					hour_st_0 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 1:
+					hour_st_1 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 2:
+					hour_st_2 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 3:
+					hour_st_3 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 4:
+					hour_st_4 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 5:
+					hour_st_5 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 6:
+					hour_st_6 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 7:
+					hour_st_7 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 8:
+					hour_st_8 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 9:
+					hour_st_9 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 10:
+					hour_st_10 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 11:
+					hour_st_11 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 12:
+					hour_st_12 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 13:
+					hour_st_13 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 14:
+					hour_st_14 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 15:
+					hour_st_15 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 16:
+					hour_st_16 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 17:
+					hour_st_17 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 18:
+					hour_st_18 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 19:
+					hour_st_19 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 20:
+					hour_st_20 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 21:
+					hour_st_21 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 22:
+					hour_st_22 += signal_output['st_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 23:
+					hour_st_23 += signal_output['st_pr'][elm]
+
+		for elm in signal_output.index:
+			if signal_output['flag'][elm] == 'tp':
+
+				if int(signal_output['time'][elm].hour) == 0:
+					hour_tp_0 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 1:
+					hour_tp_1 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 2:
+					hour_tp_2 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 3:
+					hour_tp_3 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 4:
+					hour_tp_4 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 5:
+					hour_tp_5 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 6:
+					hour_tp_6 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 7:
+					hour_tp_7 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 8:
+					hour_tp_8 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 9:
+					hour_tp_9 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 10:
+					hour_tp_10 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 11:
+					hour_tp_11 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 12:
+					hour_tp_12 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 13:
+					hour_tp_13 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 14:
+					hour_tp_14 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 15:
+					hour_tp_15 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 16:
+					hour_tp_16 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 17:
+					hour_tp_17 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 18:
+					hour_tp_18 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 19:
+					hour_tp_19 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 20:
+					hour_tp_20 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 21:
+					hour_tp_21 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 22:
+					hour_tp_22 += signal_output['tp_pr'][elm]
+
+				if int(signal_output['time'][elm].hour) == 23:
+					hour_tp_23 += signal_output['tp_pr'][elm]
+
+		print('ST **************************************************')
+		print(hour_st_0 )
+		print(hour_st_1 )
+		print(hour_st_2 )
+		print(hour_st_3 )
+		print(hour_st_4 )
+		print(hour_st_5 )
+		print(hour_st_6 )
+		print(hour_st_7 )
+		print(hour_st_8 )
+		print(hour_st_9 )
+		print(hour_st_10)
+		print(hour_st_11)
+		print(hour_st_12)
+		print(hour_st_13)
+		print(hour_st_14)
+		print(hour_st_15)
+		print(hour_st_16)
+		print(hour_st_17)
+		print(hour_st_18)
+		print(hour_st_19)
+		print(hour_st_20)
+		print(hour_st_21)
+		print(hour_st_22)
+		print(hour_st_23)
+		print('TP **************************************************')
+		print(hour_tp_0 )
+		print(hour_tp_1 )
+		print(hour_tp_2 )
+		print(hour_tp_3 )
+		print(hour_tp_4 )
+		print(hour_tp_5 )
+		print(hour_tp_6 )
+		print(hour_tp_7 )
+		print(hour_tp_8 )
+		print(hour_tp_9 )
+		print(hour_tp_10 )
+		print(hour_tp_11 )
+		print(hour_tp_12 )
+		print(hour_tp_13 )
+		print(hour_tp_14 )
+		print(hour_tp_15 )
+		print(hour_tp_16 )
+		print(hour_tp_17 )
+		print(hour_tp_18 )
+		print(hour_tp_19 )
+		print(hour_tp_20 )
+		print(hour_tp_21 )
+		print(hour_tp_22 )
+		print(hour_tp_23 )
 
 		with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 			print(learning_output)
