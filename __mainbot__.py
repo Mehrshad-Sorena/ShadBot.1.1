@@ -44,7 +44,7 @@ def Run():
 	# Schedules the job_function to be executed Monday through Friday at between 12-16 at specific times. 
 	minute_trader = '0,5,10,15,20,25,30,35,40,45,50,55'
 	#01,02,05,18,19,21,22,23
-	hour_trader = '00,03,04,06,07,08,09,10,11,12,13,14,15,16,17,20'
+	hour_trader = '00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23'
 	days = 'sat,sun,mon,tue,wed,thu,fri'
 
 	minute_news = '10'
