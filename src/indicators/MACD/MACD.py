@@ -520,8 +520,8 @@ class MACD:
 			lst_idx_buy_primary > lst_idx_sell_primary and
 			lst_idx_buy_primary > lst_idx_sell_secondry and
 			lst_idx_buy_primary >= lst_idx_buy_secondry and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) <= 6 and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) >= 2
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) <= 10 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) >= 1
 			):
 
 			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
@@ -534,10 +534,12 @@ class MACD:
 			# 						)
 
 			if (
-				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary + 1] and
-				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary + 2] and
-				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary - 1] and
-				macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary - 2] and
+				# macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary + 1] and
+				# macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary + 2] and
+				# macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary + 3] and
+				# macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary - 1] and
+				# macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary - 2] and
+				# macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary] < macd_calc_buy_primary[GL_Results_buy_primary['MACD_column_div'][0]][lst_idx_buy_primary - 3] and
 				dataset_5M_real[symbol]['low'][signal_buy_primary['index_back'][lst_idx_buy_primary]] > dataset_5M_real[symbol]['low'][lst_idx_buy_primary]
 				# dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_primary['index_back'][lst_idx_buy_primary]): ]) and
 				# SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
@@ -570,8 +572,8 @@ class MACD:
 
 					if (res_pro_buy_primary.empty == False):
 
-						diff_pr_top_buy_primary = (((res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)]) - dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)])/dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)]) * 100
-						diff_pr_down_buy_primary = ((dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)] - (res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)]))/dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)]) * 100
+						diff_pr_top_buy_primary = (((res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)]) - dataset_5M_real[symbol]['high'].iloc[-1])/dataset_5M_real[symbol]['high'].iloc[-1]) * 100
+						diff_pr_down_buy_primary = ((dataset_5M_real[symbol]['low'].iloc[-1] - (res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)]))/dataset_5M_real[symbol]['low'].iloc[-1]) * 100
 
 						# if type(diff_pr_down_buy_primary) is np.ndarray:
 						# 	res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary[0]/100))
@@ -580,11 +582,11 @@ class MACD:
 
 						if diff_pr_top_buy_primary > pr_parameters_buy_primary.elements['tp_percent_max']:
 							diff_pr_top_buy_primary = pr_parameters_buy_primary.elements['tp_percent_max']
-							res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)]*(1+(diff_pr_top_buy_primary/100))
+							res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['high'].iloc[-1]*(1+(diff_pr_top_buy_primary/100))
 
 						if diff_pr_down_buy_primary > pr_parameters_buy_primary.elements['st_percent_max']:
 							diff_pr_down_buy_primary = pr_parameters_buy_primary.elements['st_percent_max']
-							res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary/100))
+							res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['low'].iloc[-1]*(1-(diff_pr_down_buy_primary/100))
 
 
 						resist_buy = (res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)])
@@ -598,10 +600,19 @@ class MACD:
 						res_pro_buy_primary['low_lower'] = np.nan
 
 						diff_pr_top_buy_primary = pr_parameters_buy_primary.elements['tp_percent_min']
-						res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)]*(1+(diff_pr_top_buy_primary/100))
+						res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['high'].iloc[-1]*(1+(diff_pr_top_buy_primary/100))
 
 						diff_pr_down_buy_primary = pr_parameters_buy_primary.elements['st_percent_min']
-						res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary/100))
+						res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['low'].iloc[-1]*(1-(diff_pr_down_buy_primary/100))
+
+						if diff_pr_top_buy_primary > pr_parameters_buy_primary.elements['tp_percent_max']:
+							diff_pr_top_buy_primary = pr_parameters_buy_primary.elements['tp_percent_max']
+							res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['high'].iloc[-1]*(1+(diff_pr_top_buy_primary/100))
+
+						if diff_pr_down_buy_primary > pr_parameters_buy_primary.elements['st_percent_max']:
+							diff_pr_down_buy_primary = pr_parameters_buy_primary.elements['st_percent_max']
+							res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['low'].iloc[-1]*(1-(diff_pr_down_buy_primary/100))
+
 
 						resist_buy = (res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)])
 						protect_buy = (res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)])
@@ -1051,7 +1062,7 @@ class MACD:
 									 																				signalpriority = signalpriority
 									 																				)
 
-		pr_config.cfg['Tester_flag_realtest'] = True
+		# pr_config.cfg['Tester_flag_realtest'] = True
 		
 		ind_config = indicator_config()
 		macd = Divergence(parameters = ind_parameters, config = ind_config)
@@ -1119,8 +1130,8 @@ class MACD:
 			signal_output = pd.DataFrame()
 			learning_output = pd.DataFrame()
 
-		with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-			print('signals = ', signal_output)
+		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+		# 	print('signals = ', signal_output)
 
 		hour_st_0 = 0
 		hour_st_1 = 0
