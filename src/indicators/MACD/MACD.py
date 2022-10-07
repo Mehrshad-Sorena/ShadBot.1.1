@@ -521,7 +521,7 @@ class MACD:
 			lst_idx_buy_primary > lst_idx_sell_secondry and
 			lst_idx_buy_primary >= lst_idx_buy_secondry and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) <= 6 and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) >= 1
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) >= 2
 			):
 
 			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
@@ -637,7 +637,7 @@ class MACD:
 			lst_idx_buy_secondry > lst_idx_sell_secondry and
 			lst_idx_buy_secondry > lst_idx_buy_primary and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) <= 6 and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) >= 1
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) >= 2
 			):
 
 			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
@@ -753,7 +753,7 @@ class MACD:
 			lst_idx_sell_primary >= lst_idx_sell_secondry and
 			lst_idx_sell_primary > lst_idx_buy_secondry and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) <= 6 and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) >= 1
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) >= 2
 			):
 
 			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
@@ -863,7 +863,7 @@ class MACD:
 			lst_idx_sell_secondry > lst_idx_sell_primary and
 			lst_idx_sell_secondry > lst_idx_buy_secondry and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) <= 6 and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) >= 1
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) >= 2
 			):
 
 			# SMA_50 = ind.sma(dataset_5M[symbol]['close'], length = 50)
@@ -1119,8 +1119,8 @@ class MACD:
 			signal_output = pd.DataFrame()
 			learning_output = pd.DataFrame()
 
-		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-		# 	print('signals = ', signal_output['money'])
+		with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+			print('signals = ', signal_output)
 
 		hour_st_0 = 0
 		hour_st_1 = 0
