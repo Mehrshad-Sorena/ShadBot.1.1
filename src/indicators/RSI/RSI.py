@@ -1050,7 +1050,7 @@ class RSI:
 									 																				signalpriority = signalpriority
 									 																				)
 
-		pr_config.cfg['Tester_flag_realtest'] = True
+		# pr_config.cfg['Tester_flag_realtest'] = True
 
 		ind_config = indicator_config()
 		rsi = Divergence(parameters = ind_parameters, config = ind_config)
@@ -1166,206 +1166,206 @@ class RSI:
 		hour_tp_22 = 0
 		hour_tp_23 = 0
 
-		for elm in signal_output.index:
-			if signal_output['flag'][elm] == 'st':
+		# for elm in signal_output.index:
+		# 	if signal_output['flag'][elm] == 'st':
 
-				if int(signal_output['time'][elm].hour) == 0:
-					hour_st_0 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 0:
+		# 			hour_st_0 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 1:
-					hour_st_1 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 1:
+		# 			hour_st_1 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 2:
-					hour_st_2 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 2:
+		# 			hour_st_2 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 3:
-					hour_st_3 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 3:
+		# 			hour_st_3 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 4:
-					hour_st_4 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 4:
+		# 			hour_st_4 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 5:
-					hour_st_5 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 5:
+		# 			hour_st_5 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 6:
-					hour_st_6 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 6:
+		# 			hour_st_6 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 7:
-					hour_st_7 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 7:
+		# 			hour_st_7 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 8:
-					hour_st_8 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 8:
+		# 			hour_st_8 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 9:
-					hour_st_9 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 9:
+		# 			hour_st_9 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 10:
-					hour_st_10 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 10:
+		# 			hour_st_10 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 11:
-					hour_st_11 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 11:
+		# 			hour_st_11 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 12:
-					hour_st_12 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 12:
+		# 			hour_st_12 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 13:
-					hour_st_13 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 13:
+		# 			hour_st_13 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 14:
-					hour_st_14 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 14:
+		# 			hour_st_14 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 15:
-					hour_st_15 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 15:
+		# 			hour_st_15 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 16:
-					hour_st_16 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 16:
+		# 			hour_st_16 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 17:
-					hour_st_17 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 17:
+		# 			hour_st_17 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 18:
-					hour_st_18 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 18:
+		# 			hour_st_18 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 19:
-					hour_st_19 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 19:
+		# 			hour_st_19 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 20:
-					hour_st_20 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 20:
+		# 			hour_st_20 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 21:
-					hour_st_21 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 21:
+		# 			hour_st_21 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 22:
-					hour_st_22 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 22:
+		# 			hour_st_22 += signal_output['st_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 23:
-					hour_st_23 += signal_output['st_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 23:
+		# 			hour_st_23 += signal_output['st_pr'][elm]
 
-		for elm in signal_output.index:
-			if signal_output['flag'][elm] == 'tp':
+		# for elm in signal_output.index:
+		# 	if signal_output['flag'][elm] == 'tp':
 
-				if int(signal_output['time'][elm].hour) == 0:
-					hour_tp_0 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 0:
+		# 			hour_tp_0 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 1:
-					hour_tp_1 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 1:
+		# 			hour_tp_1 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 2:
-					hour_tp_2 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 2:
+		# 			hour_tp_2 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 3:
-					hour_tp_3 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 3:
+		# 			hour_tp_3 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 4:
-					hour_tp_4 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 4:
+		# 			hour_tp_4 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 5:
-					hour_tp_5 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 5:
+		# 			hour_tp_5 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 6:
-					hour_tp_6 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 6:
+		# 			hour_tp_6 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 7:
-					hour_tp_7 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 7:
+		# 			hour_tp_7 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 8:
-					hour_tp_8 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 8:
+		# 			hour_tp_8 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 9:
-					hour_tp_9 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 9:
+		# 			hour_tp_9 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 10:
-					hour_tp_10 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 10:
+		# 			hour_tp_10 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 11:
-					hour_tp_11 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 11:
+		# 			hour_tp_11 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 12:
-					hour_tp_12 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 12:
+		# 			hour_tp_12 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 13:
-					hour_tp_13 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 13:
+		# 			hour_tp_13 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 14:
-					hour_tp_14 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 14:
+		# 			hour_tp_14 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 15:
-					hour_tp_15 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 15:
+		# 			hour_tp_15 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 16:
-					hour_tp_16 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 16:
+		# 			hour_tp_16 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 17:
-					hour_tp_17 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 17:
+		# 			hour_tp_17 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 18:
-					hour_tp_18 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 18:
+		# 			hour_tp_18 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 19:
-					hour_tp_19 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 19:
+		# 			hour_tp_19 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 20:
-					hour_tp_20 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 20:
+		# 			hour_tp_20 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 21:
-					hour_tp_21 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 21:
+		# 			hour_tp_21 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 22:
-					hour_tp_22 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 22:
+		# 			hour_tp_22 += signal_output['tp_pr'][elm]
 
-				if int(signal_output['time'][elm].hour) == 23:
-					hour_tp_23 += signal_output['tp_pr'][elm]
+		# 		if int(signal_output['time'][elm].hour) == 23:
+		# 			hour_tp_23 += signal_output['tp_pr'][elm]
 
-		print('ST **************************************************')
-		print(hour_st_0 )
-		print(hour_st_1 )
-		print(hour_st_2 )
-		print(hour_st_3 )
-		print(hour_st_4 )
-		print(hour_st_5 )
-		print(hour_st_6 )
-		print(hour_st_7 )
-		print(hour_st_8 )
-		print(hour_st_9 )
-		print(hour_st_10)
-		print(hour_st_11)
-		print(hour_st_12)
-		print(hour_st_13)
-		print(hour_st_14)
-		print(hour_st_15)
-		print(hour_st_16)
-		print(hour_st_17)
-		print(hour_st_18)
-		print(hour_st_19)
-		print(hour_st_20)
-		print(hour_st_21)
-		print(hour_st_22)
-		print(hour_st_23)
-		print('TP **************************************************')
-		print(hour_tp_0 )
-		print(hour_tp_1 )
-		print(hour_tp_2 )
-		print(hour_tp_3 )
-		print(hour_tp_4 )
-		print(hour_tp_5 )
-		print(hour_tp_6 )
-		print(hour_tp_7 )
-		print(hour_tp_8 )
-		print(hour_tp_9 )
-		print(hour_tp_10 )
-		print(hour_tp_11 )
-		print(hour_tp_12 )
-		print(hour_tp_13 )
-		print(hour_tp_14 )
-		print(hour_tp_15 )
-		print(hour_tp_16 )
-		print(hour_tp_17 )
-		print(hour_tp_18 )
-		print(hour_tp_19 )
-		print(hour_tp_20 )
-		print(hour_tp_21 )
-		print(hour_tp_22 )
-		print(hour_tp_23 )
+		# print('ST **************************************************')
+		# print(hour_st_0 )
+		# print(hour_st_1 )
+		# print(hour_st_2 )
+		# print(hour_st_3 )
+		# print(hour_st_4 )
+		# print(hour_st_5 )
+		# print(hour_st_6 )
+		# print(hour_st_7 )
+		# print(hour_st_8 )
+		# print(hour_st_9 )
+		# print(hour_st_10)
+		# print(hour_st_11)
+		# print(hour_st_12)
+		# print(hour_st_13)
+		# print(hour_st_14)
+		# print(hour_st_15)
+		# print(hour_st_16)
+		# print(hour_st_17)
+		# print(hour_st_18)
+		# print(hour_st_19)
+		# print(hour_st_20)
+		# print(hour_st_21)
+		# print(hour_st_22)
+		# print(hour_st_23)
+		# print('TP **************************************************')
+		# print(hour_tp_0 )
+		# print(hour_tp_1 )
+		# print(hour_tp_2 )
+		# print(hour_tp_3 )
+		# print(hour_tp_4 )
+		# print(hour_tp_5 )
+		# print(hour_tp_6 )
+		# print(hour_tp_7 )
+		# print(hour_tp_8 )
+		# print(hour_tp_9 )
+		# print(hour_tp_10 )
+		# print(hour_tp_11 )
+		# print(hour_tp_12 )
+		# print(hour_tp_13 )
+		# print(hour_tp_14 )
+		# print(hour_tp_15 )
+		# print(hour_tp_16 )
+		# print(hour_tp_17 )
+		# print(hour_tp_18 )
+		# print(hour_tp_19 )
+		# print(hour_tp_20 )
+		# print(hour_tp_21 )
+		# print(hour_tp_22 )
+		# print(hour_tp_23 )
 
 		with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 			print(learning_output)
