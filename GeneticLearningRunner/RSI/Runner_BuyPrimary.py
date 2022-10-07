@@ -12,17 +12,26 @@ import os
 import numpy as np
 import pandas as pd
 
-def Run():
+def Run(number_data_5M):
 	loging = getdata()
 
 	parameters = Parameters()
 	config = Config()
 
-	parameters.elements['dataset_5M'], parameters.elements['dataset_1H'] = loging.readall(symbol = 'XAUUSD_i', number_5M = 'all', number_1H = 'all')
+	# parameters.elements['dataset_5M'], parameters.elements['dataset_1H'] = loging.readall(symbol = 'XAUUSD_i', number_5M = 'all', number_1H = 'all')
+	
+	loging.account_name = 'ahmadipc'
+	loging.initilizer()
+	loging.login()
+	parameters.elements['dataset_5M'] = loging.getone(timeframe = '5M', number = number_data_5M, symbol = 'XAUUSD_i')
+	parameters.elements['dataset_1H'] = loging.getone(timeframe = '1H', number = 4000, symbol = 'XAUUSD_i')
+
 	parameters.elements['symbol'] = 'XAUUSD_i'
 	parameters.elements['RSI_apply_to'] = 'close'
 
-	dataset_5M_real, _ = loging.readall(symbol = 'XAUUSD_i', number_5M = 'all', number_1H = 0)
+	dataset_5M_real = loging.getone(timeframe = '5M', number = number_data_5M, symbol = 'XAUUSD_i')
+
+	# dataset_5M_real, _ = loging.readall(symbol = 'XAUUSD_i', number_5M = 'all', number_1H = 0)
 	dataset_5M_real = dataset_5M_real[parameters.elements['symbol']]
 
 	noise_canceller = NoiseCanceller.NoiseCanceller()
@@ -61,7 +70,7 @@ def Run():
 	rsi = RSI(parameters = parameters, config = config)
 
 	try:
-		# print(a)
+		print(a)
 		rsi_calc = rsi.Genetic(
 								dataset_5M_real = dataset_5M_real,
 								dataset_5M = parameters.elements['dataset_5M'], 
