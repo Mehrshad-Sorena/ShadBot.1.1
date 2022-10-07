@@ -788,36 +788,36 @@ class Chromosome:
 		#**********************************************
 		#Config For ExtremePoints:
 
-		pr_config.cfg['ExtremePoints_status'] = random.choice([True, False])
-		pr_config.cfg['ExtremePoints_T_5M'] = random.choice([True, False])
-		pr_config.cfg['ExtremePoints_T_1H'] = random.choice([True, False])
+		pr_config.cfg['ExtremePoints_status'] = True#random.choice([True, False])
+		pr_config.cfg['ExtremePoints_T_5M'] = True#random.choice([True, False])
+		pr_config.cfg['ExtremePoints_T_1H'] = True#random.choice([True, False])
 		
 		#///////////////////////////
 
 
 		#Config For TrendLines:
 
-		pr_config.cfg['TrendLines_status'] = random.choice([True, False])
+		pr_config.cfg['TrendLines_status'] = True#random.choice([True, False])
 
-		pr_config.cfg['TrendLines_T_5M'] = random.choice([True, False])
-		pr_config.cfg['TrendLines_long_T_5M'] = random.choice([True, False])
-		pr_config.cfg['TrendLines_mid_T_5M'] = random.choice([True, False])
-		pr_config.cfg['TrendLines_short1_T_5M'] = random.choice([True, False])
-		pr_config.cfg['TrendLines_short2_T_5M'] = random.choice([True, False])
+		pr_config.cfg['TrendLines_T_5M'] = True#random.choice([True, False])
+		pr_config.cfg['TrendLines_long_T_5M'] = True#random.choice([True, False])
+		pr_config.cfg['TrendLines_mid_T_5M'] = True#random.choice([True, False])
+		pr_config.cfg['TrendLines_short1_T_5M'] = True#random.choice([True, False])
+		pr_config.cfg['TrendLines_short2_T_5M'] = True#random.choice([True, False])
 
-		pr_config.cfg['TrendLines_T_1H'] = random.choice([True, False])
-		pr_config.cfg['TrendLines_long_T_1H'] = random.choice([True, False])
-		pr_config.cfg['TrendLines_mid_T_1H'] = random.choice([True, False])
-		pr_config.cfg['TrendLines_short1_T_1H'] = random.choice([True, False])
-		pr_config.cfg['TrendLines_short2_T_1H'] = random.choice([True, False])
+		pr_config.cfg['TrendLines_T_1H'] = True#random.choice([True, False])
+		pr_config.cfg['TrendLines_long_T_1H'] = True#random.choice([True, False])
+		pr_config.cfg['TrendLines_mid_T_1H'] = True#random.choice([True, False])
+		pr_config.cfg['TrendLines_short1_T_1H'] = True#random.choice([True, False])
+		pr_config.cfg['TrendLines_short2_T_1H'] = True#random.choice([True, False])
 
 		#///////////////////////////
 
 		
 		#Config For IchimokouFlatLines:
-		pr_config.cfg['IchimokouFlatLines' + '_status'] = random.choice([True, False])
-		pr_config.cfg['IchimokouFlatLines' + '_T_5M'] = random.choice([True, False])
-		pr_config.cfg['IchimokouFlatLines' + '_T_1H'] = random.choice([True, False])
+		pr_config.cfg['IchimokouFlatLines' + '_status'] = True#random.choice([True, False])
+		pr_config.cfg['IchimokouFlatLines' + '_T_5M'] = True#random.choice([True, False])
+		pr_config.cfg['IchimokouFlatLines' + '_T_1H'] = True#random.choice([True, False])
 
 		#//////////////////////////
 
