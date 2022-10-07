@@ -37,7 +37,7 @@ print('Data Ready .... ')
 optimizers.symbol = 'XAUUSD_i'
 optimizers.sigpriority = 'primary'
 optimizers.sigtype = 'buy'
-optimizers.turn = 100
+optimizers.turn = 400
 optimizers.dataset = dataset_5M.copy()
 optimizers.timeframe = '5M'
 
@@ -46,98 +46,98 @@ optimizers.MacdOptimizer()
 optimizers.symbol = 'XAUUSD_i'
 optimizers.sigpriority = 'secondry'
 optimizers.sigtype = 'buy'
-optimizers.turn = 100
+optimizers.turn = 400
 optimizers.dataset = dataset_5M.copy()
 optimizers.timeframe = '5M'
 
 optimizers.MacdOptimizer()
 
+# optimizers.symbol = 'XAUUSD_i'
+# optimizers.sigpriority = 'primary'
+# optimizers.sigtype = 'sell'
+# optimizers.turn = 100
+# optimizers.dataset = dataset_5M.copy()
+# optimizers.timeframe = '5M'
+
+# optimizers.MacdOptimizer()
+
 optimizers.symbol = 'XAUUSD_i'
-optimizers.sigpriority = 'primary'
+optimizers.sigpriority = 'secondry'
 optimizers.sigtype = 'sell'
-optimizers.turn = 100
+optimizers.turn = 400
 optimizers.dataset = dataset_5M.copy()
 optimizers.timeframe = '5M'
 
 optimizers.MacdOptimizer()
 
-optimizers.symbol = 'XAUUSD_i'
-optimizers.sigpriority = 'secondry'
-optimizers.sigtype = 'sell'
-optimizers.turn = 100
-optimizers.dataset = dataset_5M.copy()
-optimizers.timeframe = '5M'
+# optimizers.symbol = 'XAUUSD_i'
+# optimizers.sigpriority = 'primary'
+# optimizers.sigtype = 'buy'
+# optimizers.turn = 100
+# optimizers.dataset = dataset_5M.copy()
+# optimizers.timeframe = '5M'
 
-optimizers.MacdOptimizer()
+# optimizers.StochAsticOptimizer()
 
-optimizers.symbol = 'XAUUSD_i'
-optimizers.sigpriority = 'primary'
-optimizers.sigtype = 'buy'
-optimizers.turn = 100
-optimizers.dataset = dataset_5M.copy()
-optimizers.timeframe = '5M'
+# optimizers.symbol = 'XAUUSD_i'
+# optimizers.sigpriority = 'secondry'
+# optimizers.sigtype = 'buy'
+# optimizers.turn = 100
+# optimizers.dataset = dataset_5M.copy()
+# optimizers.timeframe = '5M'
 
-optimizers.StochAsticOptimizer()
+# optimizers.StochAsticOptimizer()
 
-optimizers.symbol = 'XAUUSD_i'
-optimizers.sigpriority = 'secondry'
-optimizers.sigtype = 'buy'
-optimizers.turn = 100
-optimizers.dataset = dataset_5M.copy()
-optimizers.timeframe = '5M'
+# optimizers.symbol = 'XAUUSD_i'
+# optimizers.sigpriority = 'primary'
+# optimizers.sigtype = 'sell'
+# optimizers.turn = 100
+# optimizers.dataset = dataset_5M.copy()
+# optimizers.timeframe = '5M'
 
-optimizers.StochAsticOptimizer()
+# optimizers.StochAsticOptimizer()
 
-optimizers.symbol = 'XAUUSD_i'
-optimizers.sigpriority = 'primary'
-optimizers.sigtype = 'sell'
-optimizers.turn = 100
-optimizers.dataset = dataset_5M.copy()
-optimizers.timeframe = '5M'
+# optimizers.symbol = 'XAUUSD_i'
+# optimizers.sigpriority = 'secondry'
+# optimizers.sigtype = 'sell'
+# optimizers.turn = 100
+# optimizers.dataset = dataset_5M.copy()
+# optimizers.timeframe = '5M'
 
-optimizers.StochAsticOptimizer()
+# optimizers.StochAsticOptimizer()
 
-optimizers.symbol = 'XAUUSD_i'
-optimizers.sigpriority = 'secondry'
-optimizers.sigtype = 'sell'
-optimizers.turn = 100
-optimizers.dataset = dataset_5M.copy()
-optimizers.timeframe = '5M'
+# optimizers.symbol = 'XAUUSD_i'
+# optimizers.sigpriority = 'primary'
+# optimizers.sigtype = 'buy'
+# optimizers.turn = 100
+# optimizers.dataset = dataset_5M.copy()
+# optimizers.timeframe = '5M'
 
-optimizers.StochAsticOptimizer()
+# optimizers.RSIOptimizer()
 
-optimizers.symbol = 'XAUUSD_i'
-optimizers.sigpriority = 'primary'
-optimizers.sigtype = 'buy'
-optimizers.turn = 100
-optimizers.dataset = dataset_5M.copy()
-optimizers.timeframe = '5M'
+# optimizers.symbol = 'XAUUSD_i'
+# optimizers.sigpriority = 'secondry'
+# optimizers.sigtype = 'buy'
+# optimizers.turn = 100
+# optimizers.dataset = dataset_5M.copy()
+# optimizers.timeframe = '5M'
 
-optimizers.RSIOptimizer()
+# optimizers.RSIOptimizer()
 
-optimizers.symbol = 'XAUUSD_i'
-optimizers.sigpriority = 'secondry'
-optimizers.sigtype = 'buy'
-optimizers.turn = 100
-optimizers.dataset = dataset_5M.copy()
-optimizers.timeframe = '5M'
+# optimizers.symbol = 'XAUUSD_i'
+# optimizers.sigpriority = 'primary'
+# optimizers.sigtype = 'sell'
+# optimizers.turn = 100
+# optimizers.dataset = dataset_5M.copy()
+# optimizers.timeframe = '5M'
 
-optimizers.RSIOptimizer()
+# optimizers.RSIOptimizer()
 
-optimizers.symbol = 'XAUUSD_i'
-optimizers.sigpriority = 'primary'
-optimizers.sigtype = 'sell'
-optimizers.turn = 100
-optimizers.dataset = dataset_5M.copy()
-optimizers.timeframe = '5M'
+# optimizers.symbol = 'XAUUSD_i'
+# optimizers.sigpriority = 'secondry'
+# optimizers.sigtype = 'sell'
+# optimizers.turn = 100
+# optimizers.dataset = dataset_5M.copy()
+# optimizers.timeframe = '5M'
 
-optimizers.RSIOptimizer()
-
-optimizers.symbol = 'XAUUSD_i'
-optimizers.sigpriority = 'secondry'
-optimizers.sigtype = 'sell'
-optimizers.turn = 100
-optimizers.dataset = dataset_5M.copy()
-optimizers.timeframe = '5M'
-
-optimizers.RSIOptimizer()
+# optimizers.RSIOptimizer()
