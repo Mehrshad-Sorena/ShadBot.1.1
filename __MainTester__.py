@@ -15,6 +15,8 @@ from src.indicators.RSI.Config import Config as RsiConfig
 import pandas as pd
 import numpy as np
 
+import os
+
 symbol = 'XAUUSD_i'
 applyto = 'close'
 number_data_5M = 'all'
@@ -89,7 +91,7 @@ def BuyChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred):
 		st_pr = ((dataset_5M_real['low'][loc_end_5M_price] - np.min(dataset_5M_real['low'][loc_end_5M_price:index_tp]))/dataset_5M_real['low'][loc_end_5M_price]) * 100
 		tp_pr = ((dataset_5M_real['high'][index_tp] - dataset_5M_real['high'][loc_end_5M_price]*(1 + spred))/(dataset_5M_real['high'][loc_end_5M_price] * (1 + spred))) * 100
 
-		# if tp_pr > resist: tp_pr = resist
+		if dataset_5M_real['high'][index_tp] > tp: tp_pr = ((tp - dataset_5M_real['high'][loc_end_5M_price]*(1 + spred))/(dataset_5M_real['high'][loc_end_5M_price] * (1 + spred))) * 100
 
 		my_money = money
 
@@ -115,7 +117,7 @@ def BuyChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred):
 		st_pr = ((dataset_5M_real['low'][loc_end_5M_price] - np.min(dataset_5M_real['low'][loc_end_5M_price:index_tp]))/dataset_5M_real['low'][loc_end_5M_price]) * 100
 		tp_pr = ((dataset_5M_real['high'][index_tp] - dataset_5M_real['high'][loc_end_5M_price]*(1 + spred))/(dataset_5M_real['high'][loc_end_5M_price] * (1 + spred))) * 100
 
-		# if tp_pr > resist: tp_pr = resist
+		if dataset_5M_real['high'][index_tp] > tp: tp_pr = ((tp - dataset_5M_real['high'][loc_end_5M_price]*(1 + spred))/(dataset_5M_real['high'][loc_end_5M_price] * (1 + spred))) * 100
 
 
 		my_money = money
@@ -142,7 +144,7 @@ def BuyChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred):
 		st_pr = ((dataset_5M_real['low'][loc_end_5M_price] - dataset_5M_real['low'][index_st])/dataset_5M_real['low'][loc_end_5M_price]) * 100
 		tp_pr = ((np.max(dataset_5M_real['high'][loc_end_5M_price:index_st]) - dataset_5M_real['high'][loc_end_5M_price]*(1 + spred))/(dataset_5M_real['high'][loc_end_5M_price] * (1 + spred))) * 100
 
-		# if st_pr > protect: st_pr = protect
+		if dataset_5M_real['low'][index_st] < st: st_pr = ((dataset_5M_real['low'][loc_end_5M_price] - st)/dataset_5M_real['low'][loc_end_5M_price]) * 100
 
 		my_money = money
 
@@ -168,7 +170,7 @@ def BuyChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred):
 		st_pr = ((dataset_5M_real['low'][loc_end_5M_price] - dataset_5M_real['low'][index_st])/dataset_5M_real['low'][loc_end_5M_price]) * 100
 		tp_pr = ((np.max(dataset_5M_real['high'][loc_end_5M_price:index_st]) - dataset_5M_real['high'][loc_end_5M_price]*(1 + spred))/(dataset_5M_real['high'][loc_end_5M_price] * (1 + spred))) * 100
 		
-		# if st_pr > protect: st_pr = protect
+		if dataset_5M_real['low'][index_st] < st: st_pr = ((dataset_5M_real['low'][loc_end_5M_price] - st)/dataset_5M_real['low'][loc_end_5M_price]) * 100
 
 		my_money = money
 		coef_money = self.elements['Tester_coef_money']
@@ -194,7 +196,7 @@ def BuyChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred):
 			st_pr = ((dataset_5M_real['low'][loc_end_5M_price] - dataset_5M_real['low'][index_st])/dataset_5M_real['low'][loc_end_5M_price]) * 100
 			tp_pr = ((np.max(dataset_5M_real['high'][loc_end_5M_price:index_st]) - dataset_5M_real['high'][loc_end_5M_price]*(1 + spred))/(dataset_5M_real['high'][loc_end_5M_price] * (1 + spred))) * 100
 			
-			# if st_pr > protect: st_pr = protect
+			if dataset_5M_real['low'][index_st] < st: st_pr = ((dataset_5M_real['low'][loc_end_5M_price] - st)/dataset_5M_real['low'][loc_end_5M_price]) * 100
 
 			my_money = money
 			coef_money = self.elements['Tester_coef_money']
@@ -291,7 +293,7 @@ def SellChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred)
 		st_pr = ((np.max(dataset_5M_real['high'][loc_end_5M_price:index_tp]) - dataset_5M_real['high'][loc_end_5M_price])/dataset_5M_real['high'][loc_end_5M_price]) * 100
 		tp_pr = ((dataset_5M_real['low'][loc_end_5M_price] - dataset_5M_real['low'][index_tp] * (1 + spred))/(dataset_5M_real['low'][loc_end_5M_price])) * 100
 
-		# if tp_pr > tp: tp_pr = tp
+		if dataset_5M_real['low'][index_tp] < tp: tp_pr = ((dataset_5M_real['low'][loc_end_5M_price] - tp * (1 + spred))/(dataset_5M_real['low'][loc_end_5M_price])) * 100
 
 		my_money = money
 
@@ -319,7 +321,7 @@ def SellChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred)
 		st_pr = ((np.max(dataset_5M_real['high'][loc_end_5M_price:index_tp]) - dataset_5M_real['high'][loc_end_5M_price])/dataset_5M_real['high'][loc_end_5M_price]) * 100
 		tp_pr = ((dataset_5M_real['low'][loc_end_5M_price] - dataset_5M_real['low'][index_tp] * (1 + spred))/(dataset_5M_real['low'][loc_end_5M_price])) * 100
 
-		# if tp_pr > resist: tp_pr = resist
+		if dataset_5M_real['low'][index_tp] < tp: tp_pr = ((dataset_5M_real['low'][loc_end_5M_price] - tp * (1 + spred))/(dataset_5M_real['low'][loc_end_5M_price])) * 100
 
 		my_money = money
 
@@ -347,7 +349,7 @@ def SellChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred)
 		st_pr = ((dataset_5M_real['high'][index_st] - dataset_5M_real['high'][loc_end_5M_price])/dataset_5M_real['high'][loc_end_5M_price]) * 100
 		tp_pr = ((dataset_5M_real['low'][loc_end_5M_price] - np.min(dataset_5M_real['low'][loc_end_5M_price:index_st]) * (1 + spred))/(dataset_5M_real['low'][loc_end_5M_price])) * 100
 		
-		# if st_pr > protect: st_pr = protect
+		if dataset_5M_real['high'][index_st] > st: st_pr = ((st - dataset_5M_real['high'][loc_end_5M_price])/dataset_5M_real['high'][loc_end_5M_price]) * 100
 
 		my_money = money
 
@@ -375,7 +377,7 @@ def SellChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred)
 		st_pr = ((dataset_5M_real['high'][index_st] - dataset_5M_real['high'][loc_end_5M_price])/dataset_5M_real['high'][loc_end_5M_price]) * 100
 		tp_pr = ((dataset_5M_real['low'][loc_end_5M_price] - np.min(dataset_5M_real['low'][loc_end_5M_price:index_st]) * (1 + spred))/(dataset_5M_real['low'][loc_end_5M_price])) * 100
 		
-		# if st_pr > protect: st_pr = protect
+		if dataset_5M_real['high'][index_st] > st: st_pr = ((st - dataset_5M_real['high'][loc_end_5M_price])/dataset_5M_real['high'][loc_end_5M_price]) * 100
 
 		my_money = money
 
@@ -400,7 +402,7 @@ def SellChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred)
 			st_pr = ((dataset_5M_real['high'][index_st] - dataset_5M_real['high'][loc_end_5M_price])/dataset_5M_real['high'][loc_end_5M_price]) * 100
 			tp_pr = ((dataset_5M_real['low'][loc_end_5M_price] - np.min(dataset_5M_real['low'][loc_end_5M_price:index_st]) * (1 + spred))/(dataset_5M_real['low'][loc_end_5M_price])) * 100
 			
-			# if st_pr > protect: st_pr = protect
+			if dataset_5M_real['high'][index_st] > st: st_pr = ((st - dataset_5M_real['high'][loc_end_5M_price])/dataset_5M_real['high'][loc_end_5M_price]) * 100
 			
 			my_money = money
 
@@ -473,49 +475,77 @@ candle_index = start_point
 number_tp = 0
 number_st = 0
 
+output = pd.DataFrame(columns = [
+								'candle_index', 
+								'time', 
+								'Day',
+								'signal', 
+								'indicator',
+								'flag', 
+								'number_tp', 
+								'number_st', 
+								'money', 
+								'tp_final', 
+								'st_final', 
+								'percent', 
+								'tp', 
+								'st',
+								])
+	
+
+print('Start ....')
 while candle_index < dataset_5M_real.index[-1]:
 
-	# if candle_index < 4467: 
+	# if candle_index < 4400: 
 	# 	candle_index += 1
 	# 	continue
-	
-	dataset_5M_sliced = dataset_5M.copy()
-	dataset_5M_sliced[symbol] = dataset_5M_sliced[symbol].iloc[candle_index - start_point:candle_index]
-	dataset_5M_sliced[symbol] = dataset_5M_sliced[symbol].reset_index(inplace = False)
-	dataset_5M_sliced[symbol] = dataset_5M_sliced[symbol].drop(columns = 'index')
 
-	# print(dataset_5M_sliced[symbol])
+	dataset_1H_trade = dataset_1H.copy()
+	dataset_1H_trade[symbol] = dataset_1H[symbol].copy(deep = True)
+	dataset_5M_sliced = dataset_5M.copy()
+	dataset_5M_sliced[symbol] = dataset_5M_sliced[symbol].truncate(before=candle_index - start_point, after=candle_index, axis=None, copy=True).reset_index(drop=True)
+	# dataset_5M_sliced[symbol] = dataset_5M_sliced[symbol].reset_index(inplace = False)
+	# dataset_5M_sliced[symbol] = dataset_5M_sliced[symbol].drop(columns = 'index')
+
+	# print('no Sliced = ', dataset_1H[symbol])
+	# print('sliced = ', dataset_5M_sliced[symbol])
 
 	flag = 'no_flag'
 
-	# print(dataset_5M_sliced)
+	# print(candle_index)
 
 	try:
 		signal_macd, tp_macd, st_macd = macd.LastSignal(
-														dataset_5M = dataset_5M_sliced, 
-														dataset_1H = dataset_1H, 
+														dataset_5M = dataset_5M_sliced.copy(), 
+														dataset_1H = dataset_1H_trade.copy(), 
 														symbol = symbol
 														)
 	except Exception as ex:
 		print('MACD: ', ex)
 
-	try:
-		signal_stochastic, tp_stochastic, st_stochastic = stochastic.LastSignal(
-																				dataset_5M = dataset_5M_sliced, 
-																				dataset_1H = dataset_1H, 
-																				symbol = symbol
-																				)
-	except Exception as ex:
-		print('RSI: ', ex)
+	# dataset_1H_trade = dataset_1H.copy()
+	# dataset_1H_trade[symbol] = dataset_1H[symbol].copy(deep = True)
 
-	try:
-		signal_rsi, tp_rsi, st_rsi = rsi.LastSignal(
-													dataset_5M = dataset_5M_sliced, 
-													dataset_1H = dataset_1H, 
-													symbol = symbol
-													)
-	except Exception as ex:
-		print('StochAstic: ', ex)
+	# try:
+	# 	signal_stochastic, tp_stochastic, st_stochastic = stochastic.LastSignal(
+	# 																			dataset_5M = dataset_5M_sliced.copy(), 
+	# 																			dataset_1H = dataset_1H_trade.copy(), 
+	# 																			symbol = symbol
+	# 																			)
+	# except Exception as ex:
+	# 	print('RSI: ', ex)
+
+	# dataset_1H_trade = dataset_1H.copy()
+	# dataset_1H_trade[symbol] = dataset_1H[symbol].copy(deep = True)
+
+	# try:
+	# 	signal_rsi, tp_rsi, st_rsi = rsi.LastSignal(
+	# 												dataset_5M = dataset_5M_sliced.copy(), 
+	# 												dataset_1H = dataset_1H_trade.copy(), 
+	# 												symbol = symbol
+	# 												)
+	# except Exception as ex:
+	# 	print('StochAstic: ', ex)
 
 	signal = 'no_signal'
 	resist = 0
@@ -525,16 +555,19 @@ while candle_index < dataset_5M_real.index[-1]:
 		signal = signal_macd
 		tp = tp_macd
 		st = st_macd
+		indicator = 'macd'
 
-	elif signal_stochastic == 'buy_primary' or signal_stochastic == 'buy_secondry' or signal_stochastic == 'sell_primary' or signal_stochastic == 'sell_secondry':
-		signal = signal_stochastic
-		tp = tp_stochastic
-		st = st_stochastic
+	# elif signal_stochastic == 'buy_primary' or signal_stochastic == 'buy_secondry' or signal_stochastic == 'sell_primary' or signal_stochastic == 'sell_secondry':
+	# 	signal = signal_stochastic
+	# 	tp = tp_stochastic
+	# 	st = st_stochastic
+	# 	indicator = 'stochastic'
 
-	elif signal_rsi == 'buy_primary' or signal_rsi == 'buy_secondry' or signal_rsi == 'sell_primary' or signal_rsi == 'sell_secondry':
-		signal = signal_rsi
-		tp = tp_rsi
-		st = st_rsi
+	# elif signal_rsi == 'buy_primary' or signal_rsi == 'buy_secondry' or signal_rsi == 'sell_primary' or signal_rsi == 'sell_secondry':
+	# 	signal = signal_rsi
+	# 	tp = tp_rsi
+	# 	st = st_rsi
+	# 	indicator = 'rsi'
 
 	# print('ccccccaaaaandle = ', candle_index)
 	
@@ -550,8 +583,13 @@ while candle_index < dataset_5M_real.index[-1]:
 
 		# print()
 
+		# print('signal_macd = ', signal_macd)
+		# print('signal_rsi = ', signal_rsi)
+		# print('signal_stochastic = ', signal_stochastic)
+		# print()
+
 		try:
-			money, flag, tp_pr, st_pr, candle_index = BuyChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred)
+			money, flag, tp_pr, st_pr, candle_index_last = BuyChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred)
 		except Exception as ex:
 			print('Buy: ', ex) 
 			flag = 'no_flag' 
@@ -568,8 +606,13 @@ while candle_index < dataset_5M_real.index[-1]:
 
 		# print()
 
+		# print('signal_macd = ', signal_macd)
+		# print('signal_rsi = ', signal_rsi)
+		# print('signal_stochastic = ', signal_stochastic)
+		# print()
+
 		try:
-			money, flag, tp_pr, st_pr, candle_index = SellChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred)
+			money, flag, tp_pr, st_pr, candle_index_last = SellChecker(dataset_5M_real, tp, st, candle_index, money, coef_money, spred)
 
 		except: 
 			print('SELL: ', ex)
@@ -582,34 +625,74 @@ while candle_index < dataset_5M_real.index[-1]:
 		tp_pr_eq += tp_pr
 		number_tp += 1
 
-		print('candle_index = ', candle_index)
-		print('***** Signal = ', signal)
-		print('******** flag: ', flag)
-		print('** Number TP = ', number_tp)
-		print('** Number ST = ', number_st)
-		print('****** Money = ', money)
-		print('********* tp = ', tp_pr_eq)
-		print('********* st = ', st_pr_eq)
-		print('**** percent = ', percent)
+		output = output.append(
+								{
+								'candle_index': candle_index,
+								'time': dataset_5M_real['time'][candle_index],
+								'Day': dataset_5M_real['time'][candle_index].day_name(),
+								'signal': signal,
+								'indicator': indicator,
+								'flag': flag,
+								'number_tp': number_tp,
+								'number_st': number_st,
+								'money': money,
+								'tp_final': tp_pr_eq,
+								'st_final': st_pr_eq,
+								'percent': percent,
+								'tp': tp_pr,
+								'st': st_pr,
+								},
+								ignore_index = True
+								)
+		candle_index = candle_index_last
 		print()
+		with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+			print(output.iloc[-1])
+		print()
+
+		if os.path.exists('MainTester.csv'):
+			os.remove('MainTester.csv')
+		output.to_csv('MainTester.csv')
 
 	elif flag == 'st':
 		percent -= st_pr
 		st_pr_eq += st_pr
 		number_st += 1
 
-		print('candle_index = ', candle_index)
-		print('***** Signal = ', signal)
-		print('******** flag: ', flag)
-		print('** Number TP = ', number_tp)
-		print('** Number ST = ', number_st)
-		print('****** Money = ', money)
-		print('********* tp = ', tp_pr_eq)
-		print('********* st = ', st_pr_eq)
-		print('**** percent = ', percent)
+		output = output.append(
+								{
+								'candle_index': candle_index,
+								'time': dataset_5M_real['time'][candle_index],
+								'Day': dataset_5M_real['time'][candle_index].day_name(),
+								'signal': signal,
+								'indicator': indicator,
+								'flag': flag,
+								'number_tp': number_tp,
+								'number_st': number_st,
+								'money': money,
+								'tp_final': tp_pr_eq,
+								'st_final': st_pr_eq,
+								'percent': percent,
+								'tp': tp_pr,
+								'st': st_pr,
+								},
+								ignore_index = True
+								)
+		candle_index = candle_index_last
+		print()
+		with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+			print(output.iloc[-1])
 		print()
 
+		if os.path.exists('MainTester.csv'):
+			os.remove('MainTester.csv')
+		output.to_csv('MainTester.csv')
+
+	if money <= 4: break
+
 	candle_index += 1
+
+output.to_csv('MainTester.csv')
 
 
 print('* Final Money = ', money)
