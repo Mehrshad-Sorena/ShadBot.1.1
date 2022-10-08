@@ -530,10 +530,10 @@ class RSI:
 			# 						)
 
 			if (
-				rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary + 1] and
-				rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary + 2] and
-				rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary - 1] and
-				rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary - 2] and
+				# rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary + 1] and
+				# rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary + 2] and
+				# rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary - 1] and
+				# rsi_calc_buy_primary['rsi'][lst_idx_buy_primary] < rsi_calc_buy_primary['rsi'][lst_idx_buy_primary - 2] and
 				dataset_5M_real[symbol]['low'][signal_buy_primary['index_back'][lst_idx_buy_primary]] > dataset_5M_real[symbol]['low'][lst_idx_buy_primary]
 				# dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_primary['index_back'][lst_idx_buy_primary]): ]) and
 				# SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
@@ -565,10 +565,21 @@ class RSI:
 						res_pro_buy_primary['low_lower'] = np.nan
 
 
+					if dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)] < dataset_5M_real[symbol]['high'].iloc[-1]:
+						candle_tp = dataset_5M_real[symbol]['low'].iloc[-1] 
+					else:
+						candle_tp = dataset_5M_real[symbol]['high'].iloc[-1]
+
+					if dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)] < dataset_5M_real[symbol]['low'].iloc[-1]:
+						candle_st = dataset_5M_real[symbol]['low'].iloc[-1]
+					else:
+						candle_st = dataset_5M_real[symbol]['low'].iloc[-1]
+
+
 					if (res_pro_buy_primary.empty == False):
 
-						diff_pr_top_buy_primary = (((res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)]) - dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)])/dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)]) * 100
-						diff_pr_down_buy_primary = ((dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)] - (res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)]))/dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)]) * 100
+						diff_pr_top_buy_primary = (((res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)]) - candle_tp)/candle_tp) * 100
+						diff_pr_down_buy_primary = ((candle_st - (res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)]))/candle_st) * 100
 
 						# if type(diff_pr_down_buy_primary) is np.ndarray:
 						# 	res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary[0]/100))
@@ -577,11 +588,11 @@ class RSI:
 
 						if diff_pr_top_buy_primary > pr_parameters_buy_primary.elements['tp_percent_max']:
 							diff_pr_top_buy_primary = pr_parameters_buy_primary.elements['tp_percent_max']
-							res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)]*(1+(diff_pr_top_buy_primary/100))
+							res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = candle_tp*(1+(diff_pr_top_buy_primary/100))
 
 						if diff_pr_down_buy_primary > pr_parameters_buy_primary.elements['st_percent_max']:
 							diff_pr_down_buy_primary = pr_parameters_buy_primary.elements['st_percent_max']
-							res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary/100))
+							res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = candle_st*(1-(diff_pr_down_buy_primary/100))
 
 
 						resist_buy = (res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)])
@@ -595,10 +606,20 @@ class RSI:
 						res_pro_buy_primary['low_lower'] = np.nan
 
 						diff_pr_top_buy_primary = pr_parameters_buy_primary.elements['tp_percent_min']
-						res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['high'][int(lst_idx_buy_primary)]*(1+(diff_pr_top_buy_primary/100))
+						res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = candle_tp*(1+(diff_pr_top_buy_primary/100))
 
 						diff_pr_down_buy_primary = pr_parameters_buy_primary.elements['st_percent_min']
-						res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M_real[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary/100))
+						res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = candle_st*(1-(diff_pr_down_buy_primary/100))
+
+
+						if diff_pr_top_buy_primary > pr_parameters_buy_primary.elements['tp_percent_max']:
+							diff_pr_top_buy_primary = pr_parameters_buy_primary.elements['tp_percent_max']
+							res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)] = candle_tp*(1+(diff_pr_top_buy_primary/100))
+
+						if diff_pr_down_buy_primary > pr_parameters_buy_primary.elements['st_percent_max']:
+							diff_pr_down_buy_primary = pr_parameters_buy_primary.elements['st_percent_max']
+							res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = candle_st*(1-(diff_pr_down_buy_primary/100))
+
 
 						resist_buy = (res_pro_buy_primary['high_upper'][int(lst_idx_buy_primary)])
 						protect_buy = (res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)])
@@ -646,10 +667,10 @@ class RSI:
 			# 						)
 
 			if (
-				rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry + 1] and
-				rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry + 2] and
-				rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry - 1] and
-				rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry - 2] and
+				# rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry + 1] and
+				# rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry + 2] and
+				# rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry - 1] and
+				# rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry] < rsi_calc_buy_secondry['rsi'][lst_idx_buy_secondry - 2] and
 				dataset_5M_real[symbol]['low'][signal_buy_secondry['index_back'][lst_idx_buy_secondry]] < dataset_5M_real[symbol]['low'][lst_idx_buy_secondry]
 				# dataset_5M_real[symbol]['low'].iloc[-1] > np.mean(SMA_50[int(signal_buy_secondry['index_back'][lst_idx_buy_secondry]): ]) and
 				# SMA_25.iloc[-1] >= SMA_50.iloc[-1] and
@@ -681,10 +702,22 @@ class RSI:
 						res_pro_buy_secondry['high_upper'] = np.nan
 						res_pro_buy_secondry['low_lower'] = np.nan
 
+
+					if dataset_5M_real[symbol]['high'][int(lst_idx_buy_secondry)] < dataset_5M_real[symbol]['high'].iloc[-1]:
+						candle_tp = dataset_5M_real[symbol]['low'].iloc[-1] 
+					else:
+						candle_tp = dataset_5M_real[symbol]['high'].iloc[-1]
+
+					if dataset_5M_real[symbol]['low'][int(lst_idx_buy_secondry)] < dataset_5M_real[symbol]['low'].iloc[-1]:
+						candle_st = dataset_5M_real[symbol]['low'].iloc[-1]
+					else:
+						candle_st = dataset_5M_real[symbol]['low'].iloc[-1]
+
+
 					if (res_pro_buy_secondry.empty == False):
 
-						diff_pr_top_buy_secondry = (((res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)]) - dataset_5M_real[symbol]['high'][int(lst_idx_buy_secondry)])/dataset_5M_real[symbol]['high'][int(lst_idx_buy_secondry)]) * 100
-						diff_pr_down_buy_secondry = ((dataset_5M_real[symbol]['low'][int(lst_idx_buy_secondry)] - (res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)]))/dataset_5M_real[symbol]['low'][int(lst_idx_buy_secondry)]) * 100
+						diff_pr_top_buy_secondry = (((res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)]) - candle_tp)/candle_tp) * 100
+						diff_pr_down_buy_secondry = ((candle_st - (res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)]))/candle_st) * 100
 
 						# if type(diff_pr_down_buy_primary) is np.ndarray:
 						# 	res_pro_buy_primary['low_lower'][int(lst_idx_buy_primary)] = dataset_5M[symbol]['low'][int(lst_idx_buy_primary)]*(1-(diff_pr_down_buy_primary[0]/100))
@@ -693,11 +726,11 @@ class RSI:
 
 						if diff_pr_top_buy_secondry > pr_parameters_buy_secondry.elements['tp_percent_max']:
 							diff_pr_top_buy_secondry = pr_parameters_buy_secondry.elements['tp_percent_max']
-							res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)] = dataset_5M_real[symbol]['high'][int(lst_idx_buy_secondry)]*(1+(diff_pr_top_buy_secondry/100))
+							res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)] = candle_tp*(1+(diff_pr_top_buy_secondry/100))
 
 						if diff_pr_down_buy_secondry > pr_parameters_buy_secondry.elements['st_percent_max']:
 							diff_pr_down_buy_secondry = pr_parameters_buy_secondry.elements['st_percent_max']
-							res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)] = dataset_5M_real[symbol]['low'][int(lst_idx_buy_secondry)]*(1-(diff_pr_down_buy_secondry/100))
+							res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)] = candle_st*(1-(diff_pr_down_buy_secondry/100))
 
 
 						resist_buy = (res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)])
@@ -712,10 +745,19 @@ class RSI:
 						res_pro_buy_secondry['low_lower'] = np.nan
 
 						diff_pr_top_buy_secondry = pr_parameters_buy_secondry.elements['tp_percent_min']
-						res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)] = dataset_5M_real[symbol]['high'][int(lst_idx_buy_secondry)]*(1+(diff_pr_top_buy_secondry/100))
+						res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)] = candle_tp*(1+(diff_pr_top_buy_secondry/100))
 
 						diff_pr_down_buy_secondry = pr_parameters_buy_secondry.elements['st_percent_min']
-						res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)] = dataset_5M_real[symbol]['low'][int(lst_idx_buy_secondry)]*(1-(diff_pr_down_buy_secondry/100))
+						res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)] = candle_st*(1-(diff_pr_down_buy_secondry/100))
+
+
+						if diff_pr_top_buy_secondry > pr_parameters_buy_secondry.elements['tp_percent_max']:
+							diff_pr_top_buy_secondry = pr_parameters_buy_secondry.elements['tp_percent_max']
+							res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)] = candle_tp*(1+(diff_pr_top_buy_secondry/100))
+
+						if diff_pr_down_buy_secondry > pr_parameters_buy_secondry.elements['st_percent_max']:
+							diff_pr_down_buy_secondry = pr_parameters_buy_secondry.elements['st_percent_max']
+							res_pro_buy_secondry['low_lower'][int(lst_idx_buy_secondry)] = candle_st*(1-(diff_pr_down_buy_secondry/100))
 
 
 						resist_buy = (res_pro_buy_secondry['high_upper'][int(lst_idx_buy_secondry)])
@@ -763,10 +805,10 @@ class RSI:
 			# 						)
 
 			if (
-				rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary + 1] and
-				rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary + 2] and
-				rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary - 1] and
-				rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary - 2] and
+				# rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary + 1] and
+				# rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary + 2] and
+				# rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary - 1] and
+				# rsi_calc_sell_primary['rsi'][lst_idx_sell_primary] > rsi_calc_sell_primary['rsi'][lst_idx_sell_primary - 2] and
 				dataset_5M_real[symbol]['high'][signal_sell_primary['index_back'][lst_idx_sell_primary]] < dataset_5M_real[symbol]['high'][lst_idx_sell_primary]
 				# dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_primary['index_back'][lst_idx_sell_primary]): ]) and
 				# SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
@@ -798,19 +840,30 @@ class RSI:
 						res_pro_sell_primary['low_lower'] = np.nan
 
 
+					if dataset_5M_real[symbol]['low'][int(lst_idx_sell_primary)] < dataset_5M_real[symbol]['low'].iloc[-1]:
+						candle_tp = dataset_5M_real[symbol]['low'].iloc[-1] 
+					else:
+						candle_tp = dataset_5M_real[symbol]['low'][int(lst_idx_sell_primary)]
+
+					if dataset_5M_real[symbol]['high'][int(lst_idx_sell_primary)] < dataset_5M_real[symbol]['high'].iloc[-1]:
+						candle_st = dataset_5M_real[symbol]['high'].iloc[-1] 
+					else:
+						candle_st = dataset_5M_real[symbol]['high'].iloc[-1] 
+
+
 					if (res_pro_sell_primary.empty == False):
 
-						diff_pr_top_sell_primary = (((res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) - dataset_5M_real[symbol]['high'][int(lst_idx_sell_primary)])/dataset_5M_real[symbol]['high'][int(lst_idx_sell_primary)]) * 100
-						diff_pr_down_sell_primary = ((dataset_5M_real[symbol]['low'][int(lst_idx_sell_primary)] - (res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]))/dataset_5M_real[symbol]['low'][int(lst_idx_sell_primary)]) * 100
+						diff_pr_top_sell_primary = (((res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) - candle_st)/candle_st) * 100
+						diff_pr_down_sell_primary = ((candle_tp - (res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]))/candle_tp) * 100
 
 
 						if diff_pr_top_sell_primary > pr_parameters_sell_primary.elements['st_percent_max']:
 							diff_pr_top_sell_primary = pr_parameters_sell_primary.elements['st_percent_max']
-							(res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) = dataset_5M_real[symbol]['high'][int(lst_idx_sell_primary)]*(1+(diff_pr_top_sell_primary/100))
+							(res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) = candle_st*(1+(diff_pr_top_sell_primary/100))
 
 						if diff_pr_down_sell_primary > pr_parameters_sell_primary.elements['tp_percent_max']:
 							diff_pr_down_sell_primary = pr_parameters_sell_primary.elements['tp_percent_max']
-							(res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]) = dataset_5M_real[symbol]['low'][int(lst_idx_sell_primary)]*(1-(diff_pr_down_sell_primary/100))
+							(res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]) = candle_tp*(1-(diff_pr_down_sell_primary/100))
 							
 
 						resist_sell = (res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)])
@@ -825,11 +878,21 @@ class RSI:
 						res_pro_sell_primary['low_lower'] = np.nan
 
 						diff_pr_top_sell_primary = pr_parameters_sell_primary.elements['st_percent_min']
-						(res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) = dataset_5M_real[symbol]['high'][int(lst_idx_sell_primary)]*(1+(diff_pr_top_sell_primary/100))
+						(res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) = candle_st*(1+(diff_pr_top_sell_primary/100))
 
 						diff_pr_down_sell_primary = pr_parameters_sell_primary.elements['tp_percent_min']
-						(res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]) = dataset_5M_real[symbol]['low'][int(lst_idx_sell_primary)]*(1-(diff_pr_down_sell_primary/100))
+						(res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]) = candle_tp*(1-(diff_pr_down_sell_primary/100))
+						
+
+						if diff_pr_top_sell_primary > pr_parameters_sell_primary.elements['st_percent_max']:
+							diff_pr_top_sell_primary = pr_parameters_sell_primary.elements['st_percent_max']
+							(res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)]) = candle_st*(1+(diff_pr_top_sell_primary/100))
+
+						if diff_pr_down_sell_primary > pr_parameters_sell_primary.elements['tp_percent_max']:
+							diff_pr_down_sell_primary = pr_parameters_sell_primary.elements['tp_percent_max']
+							(res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)]) = candle_tp*(1-(diff_pr_down_sell_primary/100))
 							
+
 						resist_sell = (res_pro_sell_primary['high_upper'][int(lst_idx_sell_primary)])
 						protect_sell = (res_pro_sell_primary['low_lower'][int(lst_idx_sell_primary)])
 
@@ -874,10 +937,10 @@ class RSI:
 			# 						)
 
 			if (
-				rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry + 1] and
-				rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry + 2] and
-				rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry - 1] and
-				rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry - 2] and
+				# rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry + 1] and
+				# rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry + 2] and
+				# rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry - 1] and
+				# rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry] > rsi_calc_sell_secondry['rsi'][lst_idx_sell_secondry - 2] and
 				dataset_5M_real[symbol]['high'][signal_sell_secondry['index_back'][lst_idx_sell_secondry]] > dataset_5M_real[symbol]['high'][lst_idx_sell_secondry]
 				# dataset_5M_real[symbol]['high'].iloc[-1] < np.mean(SMA_50[int(signal_sell_secondry['index_back'][lst_idx_sell_secondry]): ]) and
 				# SMA_25.iloc[-1] <= SMA_50.iloc[-1] and
@@ -908,19 +971,30 @@ class RSI:
 						res_pro_sell_secondry['low_lower'] = np.nan
 
 
+					if dataset_5M_real[symbol]['low'][int(lst_idx_sell_secondry)] < dataset_5M_real[symbol]['low'].iloc[-1]:
+						candle_tp = dataset_5M_real[symbol]['low'].iloc[-1]
+					else:
+						candle_tp = dataset_5M_real[symbol]['low'][int(lst_idx_sell_secondry)]
+
+					if dataset_5M_real[symbol]['high'][int(lst_idx_sell_secondry)] < dataset_5M_real[symbol]['high'].iloc[-1]:
+						candle_st = dataset_5M_real[symbol]['high'].iloc[-1] 
+					else:
+						candle_st = dataset_5M_real[symbol]['high'].iloc[-1] 
+
+
 					if (res_pro_sell_secondry.empty == False):
 
-						diff_pr_top_sell_secondry = (((res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) - dataset_5M_real[symbol]['high'][int(lst_idx_sell_secondry)])/dataset_5M_real[symbol]['high'][int(lst_idx_sell_secondry)]) * 100
-						diff_pr_down_sell_secondry = ((dataset_5M_real[symbol]['low'][int(lst_idx_sell_secondry)] - (res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]))/dataset_5M_real[symbol]['low'][int(lst_idx_sell_secondry)]) * 100
+						diff_pr_top_sell_secondry = (((res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) - candle_st)/candle_st) * 100
+						diff_pr_down_sell_secondry = ((candle_tp - (res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]))/candle_tp) * 100
 
 
 						if diff_pr_top_sell_secondry > pr_parameters_sell_secondry.elements['st_percent_max']:
 							diff_pr_top_sell_secondry = pr_parameters_sell_secondry.elements['st_percent_max']
-							(res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) = dataset_5M_real[symbol]['high'][int(lst_idx_sell_secondry)]*(1+(diff_pr_top_sell_secondry/100))
+							(res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) = candle_st*(1+(diff_pr_top_sell_secondry/100))
 
 						if diff_pr_down_sell_secondry > pr_parameters_sell_secondry.elements['tp_percent_max']:
 							diff_pr_down_sell_secondry = pr_parameters_sell_secondry.elements['tp_percent_max']
-							(res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]) = dataset_5M_real[symbol]['low'][int(lst_idx_sell_secondry)]*(1-(diff_pr_down_sell_secondry/100))
+							(res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]) = candle_tp*(1-(diff_pr_down_sell_secondry/100))
 							
 
 						resist_sell = (res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)])
@@ -935,11 +1009,21 @@ class RSI:
 						res_pro_sell_secondry['low_lower'] = np.nan
 						
 						diff_pr_top_sell_secondry = pr_parameters_sell_secondry.elements['st_percent_min']
-						(res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) = dataset_5M_real[symbol]['high'][int(lst_idx_sell_secondry)]*(1+(diff_pr_top_sell_secondry/100))
+						(res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) = candle_st*(1+(diff_pr_top_sell_secondry/100))
 
 						diff_pr_down_sell_secondry = pr_parameters_sell_secondry.elements['tp_percent_min']
-						(res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]) = dataset_5M_real[symbol]['low'][int(lst_idx_sell_secondry)]*(1-(diff_pr_down_sell_secondry/100))
+						(res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]) = candle_tp*(1-(diff_pr_down_sell_secondry/100))
+						
+
+						if diff_pr_top_sell_secondry > pr_parameters_sell_secondry.elements['st_percent_max']:
+							diff_pr_top_sell_secondry = pr_parameters_sell_secondry.elements['st_percent_max']
+							(res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)]) = candle_st*(1+(diff_pr_top_sell_secondry/100))
+
+						if diff_pr_down_sell_secondry > pr_parameters_sell_secondry.elements['tp_percent_max']:
+							diff_pr_down_sell_secondry = pr_parameters_sell_secondry.elements['tp_percent_max']
+							(res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)]) = candle_tp*(1-(diff_pr_down_sell_secondry/100))
 							
+
 						resist_sell = (res_pro_sell_secondry['high_upper'][int(lst_idx_sell_secondry)])
 						protect_sell = (res_pro_sell_secondry['low_lower'][int(lst_idx_sell_secondry)])
 						
