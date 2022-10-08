@@ -1570,12 +1570,16 @@ class MACD:
 		# 					):
 		# 	pass
 
+		path_society = macd_config.cfg['path_society'] + signalpriority + path_slash + signaltype + path_slash + symbol + '.csv'
+
+		if os.path.exists(path_society): os.remove(path_society)
+
 		chromosome, macd_parameters, ind_parameters, pr_parameters, pr_config = chrom.Get(
 																							work = 'BigBang',
 																							signaltype = signaltype,
 																							signalpriority = signalpriority,
 																							symbol = symbol,
-																							number_chromos = 100,
+																							number_chromos = 20,
 																							Chromosome = '',
 																							chrom_counter = 0
 																							)
@@ -1608,10 +1612,10 @@ class MACD:
 			max_corr = chromosome_output['corr'].min()/3
 
 			if num_turn <= len(learning_result['score']):
-				num_turn = (len(learning_result['score'])) + 20
+				num_turn = (len(learning_result['score'])) + 10
 
 				if len(chromosome_output) >= num_turn:
-					num_turn = len(chromosome_output) + 20
+					num_turn = len(chromosome_output) + 10
 
 		else:
 			learning_result = pd.DataFrame()
@@ -1708,7 +1712,7 @@ class MACD:
 				continue
 
 			# if all_chorms >= int(num_turn): break
-			if all_chorms >= 200: break
+			if all_chorms >= 40: break
 			all_chorms += 1
 
 
