@@ -1537,7 +1537,7 @@ class MACD:
 		chromosome_output = pd.read_csv(path_elites + symbol + '_ChromosomeResults.csv').drop(columns='Unnamed: 0')
 
 		chromosome_output['score'].iloc[0] = GL_Results['score'][0]
-		chromosome_output['score'].iloc[0] = GL_Results['score'][0]
+		learning_result['score'].iloc[0] = GL_Results['score'][0]
 
 		if os.path.exists(path_elites + symbol + '_ChromosomeResults.csv'):
 			os.remove(path_elites + symbol + '_ChromosomeResults.csv')
