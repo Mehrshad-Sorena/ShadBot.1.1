@@ -5,7 +5,20 @@ import pandas_ta as ind
 from zigzag import peak_valley_pivots
 import matplotlib.pyplot as plt
 
+from src.indicators.MACD.Config import Config
 
+config = Config()
+
+path_elites = config.cfg['path_elites'] + 'primary' + '\\' + 'buy' + '\\' + 'XAUUSD_i' + '_LearningResults.csv'
+
+df = pd.read_csv(path_elites)
+
+print(df['score'].iloc[0])
+
+
+
+import sys
+sys.exit()
 loging = getdata()
 dataset_5M, dataset_1H = loging.readall(symbol = 'XAUUSD_i', number_5M = 4000, number_1H = 0)
 dataset_5M = dataset_5M['XAUUSD_i']
