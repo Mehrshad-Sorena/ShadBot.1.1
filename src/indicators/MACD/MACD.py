@@ -2253,6 +2253,9 @@ class MACD:
 				continue
 
 		#**************************** Best Find *********************************************************
+
+		if os.path.exists(path_society): os.remove(path_society)
+		
 		#************ Finded:
 		if len(chromosome_output) > 0:
 
