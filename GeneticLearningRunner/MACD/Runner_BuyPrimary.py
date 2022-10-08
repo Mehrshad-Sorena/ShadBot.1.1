@@ -62,11 +62,11 @@ def Run(number_data_5M):
 	optimizers.symbol = 'XAUUSD_i'
 	optimizers.sigpriority = 'primary'
 	optimizers.sigtype = 'buy'
-	optimizers.turn = 2000
+	optimizers.turn = 1200
 	optimizers.dataset = parameters.elements['dataset_5M'].copy()
 	optimizers.timeframe = '5M'
 
-	# optimizers.MacdOptimizer()
+	optimizers.MacdOptimizer()
 
 	#parameters.elements['dataset_5M'], parameters.elements['dataset_1H'] = loging.readall(symbol = 'XAUUSD_i', number_5M = 'all', number_1H = 'all')
 
@@ -87,7 +87,7 @@ def Run(number_data_5M):
 	except Exception as ex:
 		print('MACD ERROR: ', ex)
 
-	for turn in range(0,4):
+	for turn in range(0,1):
 		print('GetPermit ... ')
 		try:
 			macd_calc = macd.GetPermit(
