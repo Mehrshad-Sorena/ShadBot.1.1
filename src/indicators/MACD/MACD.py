@@ -2280,8 +2280,8 @@ class MACD:
 			# 	print()
 
 			best_chromosome = pd.DataFrame()
-			max_score_output = np.max(learning_result['score'].dropna())
-			best_score_index = np.where(learning_result['score'] == max_score_output)[0]
+			max_score_output = np.max(chromosome_output['score'].dropna())
+			best_score_index = np.where(chromosome_output['score'] == max_score_output)[0]
 			best_dict = dict()
 			for idx in best_score_index:
 				for clm in learning_result.columns:
