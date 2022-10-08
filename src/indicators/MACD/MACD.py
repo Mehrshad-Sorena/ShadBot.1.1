@@ -2071,8 +2071,8 @@ class MACD:
 				if os.path.exists(path_elites + symbol + '_ChromosomeResults.csv'):
 					os.remove(path_elites + symbol + '_ChromosomeResults.csv')
 
-				chromosome_output.to_csv(path_elites + symbol + '_ChromosomeResults.csv')
-				learning_result.to_csv(path_elites + symbol + '_LearningResults.csv')
+				chromosome_output.sort_values(by=['score'], ascending=False).to_csv(path_elites + symbol + '_ChromosomeResults.csv')
+				learning_result.sort_values(by=['score'], ascending=False).to_csv(path_elites + symbol + '_LearningResults.csv')
 
 				#//////////////////////
 
@@ -2249,8 +2249,8 @@ class MACD:
 			if os.path.exists(path_elites + symbol + '_ChromosomeResults.csv'):
 				os.remove(path_elites + symbol + '_ChromosomeResults.csv')
 
-			chromosome_output.to_csv(path_elites + symbol + '_ChromosomeResults.csv')
-			learning_result.to_csv(path_elites + symbol + '_LearningResults.csv')
+			chromosome_output.sort_values(by=['score'], ascending=False).to_csv(path_elites + symbol + '_ChromosomeResults.csv')
+			learning_result.sort_values(by=['score'], ascending=False).to_csv(path_elites + symbol + '_LearningResults.csv')
 
 			# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 			# 	print('=======> Chorme ===> ')
