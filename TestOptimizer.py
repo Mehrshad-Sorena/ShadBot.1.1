@@ -52,14 +52,14 @@ optimizers.timeframe = '5M'
 
 optimizers.MacdOptimizer()
 
-# optimizers.symbol = 'XAUUSD_i'
-# optimizers.sigpriority = 'primary'
-# optimizers.sigtype = 'sell'
-# optimizers.turn = 100
-# optimizers.dataset = dataset_5M.copy()
-# optimizers.timeframe = '5M'
+optimizers.symbol = 'XAUUSD_i'
+optimizers.sigpriority = 'primary'
+optimizers.sigtype = 'sell'
+optimizers.turn = 400
+optimizers.dataset = dataset_5M.copy()
+optimizers.timeframe = '5M'
 
-# optimizers.MacdOptimizer()
+optimizers.MacdOptimizer()
 
 optimizers.symbol = 'XAUUSD_i'
 optimizers.sigpriority = 'secondry'
