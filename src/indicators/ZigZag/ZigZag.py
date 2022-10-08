@@ -5,8 +5,8 @@ def Find(dataset, index_first, index_last):
 
 	ZigZag = peak_valley_pivots(
 								dataset['close'][index_first : index_last], 
-								abs(dataset['close'][index_first : index_last].pct_change(1)).mean(),
-								-abs(dataset['close'][index_first : index_last].pct_change(1)).mean()
+								abs(dataset['close'][index_first : index_last].pct_change(1)).max(),
+								-abs(dataset['close'][index_first : index_last].pct_change(1)).max()
 								)
 
 	ts_ZigZag = pd.Series(dataset['close'][index_first:index_last], index=dataset['close'][index_first : index_last].index)
