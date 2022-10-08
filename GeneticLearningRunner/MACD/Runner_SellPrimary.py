@@ -12,7 +12,7 @@ import os
 import numpy as np
 import pandas as pd
 
-def Run():
+def Run(number_data_5M):
 	loging = getdata()
 
 
@@ -20,8 +20,17 @@ def Run():
 	config = Config()
 
 	parameters.elements['dataset_5M'], parameters.elements['dataset_1H'] = loging.readall(symbol = 'XAUUSD_i', number_5M = 'all', number_1H = 'all')
+	
+	# loging.account_name = 'ahmadipc'
+	# loging.initilizer()
+	# loging.login()
+	# parameters.elements['dataset_5M'] = loging.getone(timeframe = '5M', number = number_data_5M, symbol = 'XAUUSD_i')
+	# parameters.elements['dataset_1H'] = loging.getone(timeframe = '1H', number = 4000, symbol = 'XAUUSD_i')
+
 	parameters.elements['symbol'] = 'XAUUSD_i'
 	parameters.elements['MACD_apply_to'] = 'close'
+
+	# dataset_5M_real = loging.getone(timeframe = '5M', number = number_data_5M, symbol = 'XAUUSD_i')
 
 	dataset_5M_real, _ = loging.readall(symbol = 'XAUUSD_i', number_5M = 'all', number_1H = 0)
 	dataset_5M_real = dataset_5M_real[parameters.elements['symbol']]
@@ -76,7 +85,7 @@ def Run():
 
 	for turn in range(0,4):
 
-		try:
+		if True:#try:
 			macd_calc = macd.GetPermit(
 									dataset_5M_real = dataset_5M_real,
 									dataset_5M = parameters.elements['dataset_5M'],
@@ -93,5 +102,5 @@ def Run():
 				): 
 				break
 
-		except Exception as ex:
+		else:#except Exception as ex:
 			print('MACD GetPermit ERROR: ', ex)
