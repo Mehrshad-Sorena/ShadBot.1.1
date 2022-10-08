@@ -60,11 +60,11 @@ def Run(number_data_5M):
 	optimizers.symbol = 'XAUUSD_i'
 	optimizers.sigpriority = 'primary'
 	optimizers.sigtype = 'sell'
-	optimizers.turn = 4000
+	optimizers.turn = 600
 	optimizers.dataset = parameters.elements['dataset_5M'].copy()
 	optimizers.timeframe = '5M'
 
-	# optimizers.MacdOptimizer()
+	optimizers.MacdOptimizer()
 
 	macd = MACD(parameters = parameters, config = config)
 
@@ -83,7 +83,7 @@ def Run(number_data_5M):
 	except Exception as ex:
 		print('MACD ERROR: ', ex)
 
-	for turn in range(0,4):
+	for turn in range(0,1):
 
 		if True:#try:
 			macd_calc = macd.GetPermit(
