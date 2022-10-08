@@ -1532,6 +1532,25 @@ class MACD:
 			GL_Results['permit'] = [False]
 			GL_Results['score'][0] = 0
 
+		path_elites = macd_config.cfg['path_elites'] + signalpriority + path_slash + signaltype + path_slash
+		learning_result = pd.read_csv(path_elites + symbol + '_LearningResults.csv').drop(columns='Unnamed: 0')
+		chromosome_output = pd.read_csv(path_elites + symbol + '_ChromosomeResults.csv').drop(columns='Unnamed: 0')
+
+		chromosome_output = chromosome_output.sort_values(by=['score'], ascending=False)
+		learning_result = learning_result.sort_values(by=['score'], ascending=False)
+
+		chromosome_output['score'].iloc[0] = GL_Results['score'][0]
+		chromosome_output['score'].iloc[0] = GL_Results['score'][0]
+
+		if os.path.exists(path_elites + symbol + '_ChromosomeResults.csv'):
+			os.remove(path_elites + symbol + '_ChromosomeResults.csv')
+
+		if os.path.exists(path_elites + symbol + '_LearningResults.csv'):
+			os.remove(path_elites + symbol + '_LearningResults.csv')
+
+		chromosome_output = chromosome_output.sort_values(by=['score'], ascending=False).to_csv(path_elites + symbol + '_ChromosomeResults.csv')
+		learning_result = learning_result.sort_values(by=['score'], ascending=False).to_csv(path_elites + symbol + '_LearningResults.csv')
+
 		if os.path.exists(path_superhuman + symbol + '.csv'):
 			os.remove(path_superhuman + symbol + '.csv')
 
