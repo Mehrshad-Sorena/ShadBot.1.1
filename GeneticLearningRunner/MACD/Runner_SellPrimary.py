@@ -69,7 +69,7 @@ def Run(number_data_5M):
 	macd = MACD(parameters = parameters, config = config)
 
 	try:
-		# print(a)
+		print(a)
 		macd_calc = macd.Genetic(
 								dataset_5M_real = dataset_5M_real,
 								dataset_5M = parameters.elements['dataset_5M'], 
@@ -85,7 +85,8 @@ def Run(number_data_5M):
 
 	for turn in range(0,4):
 
-		if True:#try:
+		try:
+			print(a)
 			macd_calc = macd.GetPermit(
 									dataset_5M_real = dataset_5M_real,
 									dataset_5M = parameters.elements['dataset_5M'],
@@ -102,5 +103,5 @@ def Run(number_data_5M):
 				): 
 				break
 
-		else:#except Exception as ex:
+		except Exception as ex:
 			print('MACD GetPermit ERROR: ', ex)
