@@ -196,17 +196,27 @@ class Tester:
 
 		#print(signal)
 
-		score_money = ((ideal_money - signal['money'][np.max(signal['money'].index)])/ideal_money) * 100
+		# print('ideeeeeeall = ', ideal_money)
+		# print('money = ', type(signal))
+
+		if signal.empty == False:
+			score_money = ((ideal_money - signal['money'][np.max(signal['money'].index)])/ideal_money) * 100
+		else:
+			score_money = 100
+
 		if score_money < 0: score_money = 0
 		score_money = 100 - score_money
 
-		if signal['money'][np.max(signal['money'].index)] >= 1200:
-			score_money = score_money
+		if signal.empty == False:
+			if signal['money'][np.max(signal['money'].index)] >= 1200:
+				score_money = score_money
 
+			else:
+				score_money = score_money/10
+
+			scores_out['money'] = [signal['money'][np.max(signal['money'].index)]]
 		else:
-			score_money = score_money/10
-
-		scores_out['money'] = [signal['money'][np.max(signal['money'].index)]]
+			scores_out['money'] = 0
 
 		if score_money <= 0: score_money = 1
 
