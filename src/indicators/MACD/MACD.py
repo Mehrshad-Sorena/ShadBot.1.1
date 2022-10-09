@@ -1537,7 +1537,7 @@ class MACD:
 		chromosome_output = pd.read_csv(path_elites + symbol + '_ChromosomeResults.csv').drop(columns='Unnamed: 0')
 
 		chromosome_output['score'].iloc[0] = GL_Results['score'][0]
-		learning_result['score'].iloc[0] = GL_Results['score'][0]
+		learning_result.iloc[0] = learning_output.iloc[0]#GL_Results['score'][0]
 
 		if os.path.exists(path_elites + symbol + '_ChromosomeResults.csv'):
 			os.remove(path_elites + symbol + '_ChromosomeResults.csv')
@@ -1628,10 +1628,10 @@ class MACD:
 			max_corr = chromosome_output['corr'].min()/3
 
 			if num_turn <= len(learning_result['score']):
-				num_turn = (len(learning_result['score'])) + 10
+				num_turn = (len(learning_result['score'])) + 20
 
 				if len(chromosome_output) >= num_turn:
-					num_turn = len(chromosome_output) + 10
+					num_turn = len(chromosome_output) + 20
 
 		else:
 			learning_result = pd.DataFrame()
@@ -1728,7 +1728,7 @@ class MACD:
 				continue
 
 			# if all_chorms >= int(num_turn): break
-			if all_chorms >= 5: break
+			if all_chorms >= 100: break
 			all_chorms += 1
 
 
