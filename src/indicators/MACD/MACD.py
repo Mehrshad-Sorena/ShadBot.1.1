@@ -1504,10 +1504,16 @@ class MACD:
 		if learning_output.empty == False:
 
 			if learning_output['score'][0] >= GL_Results['score'][0] * 0.9:
-				GL_Results['permit'] = [True]
+				if 'permit' in GL_Results.columns:
+					GL_Results['permit'][0] = True
+				else:
+					GL_Results['permit'] = [True]
 
 			else:
-				GL_Results['permit'] = [False]
+				if 'permit' in GL_Results.columns:
+					GL_Results['permit'][0] = False
+				else:
+					GL_Results['permit'] = [False]
 			
 			GL_Results['score'][0] = learning_output['score'][0]
 			GL_Results['mean_tp_pr'][0] = learning_output['mean_tp_pr'][0]
@@ -1536,13 +1542,17 @@ class MACD:
 		learning_result = pd.read_csv(path_elites + symbol + '_LearningResults.csv').drop(columns='Unnamed: 0')
 		chromosome_output = pd.read_csv(path_elites + symbol + '_ChromosomeResults.csv').drop(columns='Unnamed: 0')
 
-		chromosome_output['st_percent_max'][0] = GL_Results['max_st'][0]
-		chromosome_output['st_percent_min'][0] = GL_Results['min_st'][0]
-		chromosome_output['tp_percent_max'][0] = GL_Results['max_tp'][0]
-		chromosome_output['tp_percent_min'][0] = GL_Results['min_tp'][0]
+		chromosome_output['st_percent_max'][0] = GL_Results['st_percent_max'][0]
+		chromosome_output['st_percent_min'][0] = GL_Results['st_percent_min'][0]
+		chromosome_output['tp_percent_max'][0] = GL_Results['tp_percent_max'][0]
+		chromosome_output['tp_percent_min'][0] = GL_Results['tp_percent_min'][0]
 
-		chromosome_output['score'].iloc[0] = GL_Results['score'][0]
+		chromosome_output['score'][0] = GL_Results['score'][0]
 		learning_result.iloc[0] = learning_output.iloc[0]#GL_Results['score'][0]
+
+		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
+		# 	print(chromosome_output.iloc[0])
+
 
 		if os.path.exists(path_elites + symbol + '_ChromosomeResults.csv'):
 			os.remove(path_elites + symbol + '_ChromosomeResults.csv')
@@ -1557,6 +1567,8 @@ class MACD:
 			os.remove(path_superhuman + symbol + '.csv')
 
 		GL_Results.to_csv(path_superhuman + symbol + '.csv')
+
+		# sys.exit()
 
 		return GL_Results
 
@@ -1689,7 +1701,7 @@ class MACD:
 
 
 
-		while chrom_counter < len(chromosome):
+		while False:#chrom_counter < len(chromosome):
 
 			if chromosome == 'End_of_Chromosomes':
 				# print(chromosome)
@@ -2262,6 +2274,7 @@ class MACD:
 		if os.path.exists(path_society): os.remove(path_society)
 		
 		#************ Finded:
+		# print(len(chromosome_output))
 		if len(chromosome_output) > 0:
 
 			if not os.path.exists(path_elites):
