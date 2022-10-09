@@ -520,7 +520,7 @@ class MACD:
 			lst_idx_buy_primary > lst_idx_sell_primary and
 			lst_idx_buy_primary > lst_idx_sell_secondry and
 			lst_idx_buy_primary >= lst_idx_buy_secondry and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) <= 6 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) <= 2 and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_primary) >= 1
 			):
 
@@ -657,7 +657,7 @@ class MACD:
 			lst_idx_buy_secondry > lst_idx_sell_primary and
 			lst_idx_buy_secondry > lst_idx_sell_secondry and
 			lst_idx_buy_secondry > lst_idx_buy_primary and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) <= 6 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) <= 2 and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_buy_secondry) >= 1
 			):
 
@@ -792,7 +792,7 @@ class MACD:
 			lst_idx_sell_primary > lst_idx_buy_primary and
 			lst_idx_sell_primary >= lst_idx_sell_secondry and
 			lst_idx_sell_primary > lst_idx_buy_secondry and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) <= 6 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) <= 2 and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_primary) >= 1
 			):
 
@@ -923,7 +923,7 @@ class MACD:
 			lst_idx_sell_secondry > lst_idx_buy_primary and
 			lst_idx_sell_secondry > lst_idx_sell_primary and
 			lst_idx_sell_secondry > lst_idx_buy_secondry and
-			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) <= 6 and
+			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) <= 2 and
 			(len(dataset_5M_real[symbol]['close']) - 1 - lst_idx_sell_secondry) >= 1
 			):
 
@@ -1133,7 +1133,7 @@ class MACD:
 									 																				signalpriority = signalpriority
 									 																				)
 		macd_config = MACDConfig()
-		path_superhuman = macd_config.cfg['path_superhuman'] + signalpriority + path_slash + signaltype + path_slash
+		# path_superhuman = macd_config.cfg['path_superhuman'] + signalpriority + path_slash + signaltype + path_slash
 		# pr_config.cfg['Tester_flag_realtest'] = True
 		
 		ind_config = indicator_config()
@@ -1155,12 +1155,12 @@ class MACD:
 
 		macd_calc = self.calculator_macd()
 
-		# if 'permit' in GL_Results.columns:
-		# 	if (
-		# 		GL_Results['permit'][0] == True and
-		# 		GL_Results['draw_down'][0] <= 7
-		# 		): 
-		# 		return GL_Results
+		if 'permit' in GL_Results.columns:
+			if (
+				GL_Results['permit'][0] == True and
+				GL_Results['draw_down'][0] <= 7
+				): 
+				return GL_Results
 
 		if True:#try:
 
@@ -1535,6 +1535,11 @@ class MACD:
 		path_elites = macd_config.cfg['path_elites'] + signalpriority + path_slash + signaltype + path_slash
 		learning_result = pd.read_csv(path_elites + symbol + '_LearningResults.csv').drop(columns='Unnamed: 0')
 		chromosome_output = pd.read_csv(path_elites + symbol + '_ChromosomeResults.csv').drop(columns='Unnamed: 0')
+
+		chromosome_output['st_percent_max'][0] = GL_Results['max_st'][0]
+		chromosome_output['st_percent_min'][0] = GL_Results['min_st'][0]
+		chromosome_output['tp_percent_max'][0] = GL_Results['max_tp'][0]
+		chromosome_output['tp_percent_min'][0] = GL_Results['min_tp'][0]
 
 		chromosome_output['score'].iloc[0] = GL_Results['score'][0]
 		learning_result.iloc[0] = learning_output.iloc[0]#GL_Results['score'][0]
