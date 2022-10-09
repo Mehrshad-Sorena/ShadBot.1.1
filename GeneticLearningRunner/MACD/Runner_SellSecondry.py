@@ -60,7 +60,7 @@ def Run(number_data_5M):
 	optimizers.symbol = 'XAUUSD_i'
 	optimizers.sigpriority = 'secondry'
 	optimizers.sigtype = 'sell'
-	optimizers.turn = 250
+	optimizers.turn = 700
 	optimizers.dataset = parameters.elements['dataset_5M'].copy()
 	optimizers.timeframe = '5M'
 
@@ -69,7 +69,7 @@ def Run(number_data_5M):
 	macd = MACD(parameters = parameters, config = config)
 
 	try:
-		# print(a)
+		print(a)
 		macd_calc = macd.Genetic(
 								dataset_5M_real = dataset_5M_real,
 								dataset_5M = parameters.elements['dataset_5M'], 
@@ -85,6 +85,7 @@ def Run(number_data_5M):
 	for turn in range(0,4):
 
 		try:
+			print(a)
 			macd_calc = macd.GetPermit(
 									dataset_5M_real = dataset_5M_real,
 									dataset_5M = parameters.elements['dataset_5M'],
