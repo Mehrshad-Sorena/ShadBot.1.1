@@ -1162,7 +1162,7 @@ class MACD:
 				): 
 				return GL_Results
 
-		if True:#try:
+		try:
 
 			signal, signaltype, indicator = macd.divergence(
 															sigtype = signaltype,
@@ -1196,7 +1196,7 @@ class MACD:
 																indicator = indicator,
 																flag_savepic = flag_savepic
 																)
-		else:#except Exception as ex:
+		except Exception as ex:
 			print('Permit Error: ', ex)
 
 			signal_output = pd.DataFrame()
@@ -1548,7 +1548,9 @@ class MACD:
 		chromosome_output['tp_percent_min'][0] = GL_Results['tp_percent_min'][0]
 
 		chromosome_output['score'][0] = GL_Results['score'][0]
-		learning_result.iloc[0] = learning_output.iloc[0]#GL_Results['score'][0]
+
+		if learning_output.empty == False:
+			learning_result.iloc[0] = learning_output.iloc[0]
 
 		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 		# 	print(chromosome_output.iloc[0])
