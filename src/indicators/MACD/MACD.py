@@ -1703,7 +1703,7 @@ class MACD:
 
 
 
-		while False:#chrom_counter < len(chromosome):
+		while chrom_counter < len(chromosome):
 
 			if chromosome == 'End_of_Chromosomes':
 				# print(chromosome)
@@ -1747,7 +1747,7 @@ class MACD:
 				continue
 
 			# if all_chorms >= int(num_turn): break
-			if all_chorms >= 1: break
+			if all_chorms >= 20: break
 			all_chorms += 1
 
 
