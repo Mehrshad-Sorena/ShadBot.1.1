@@ -1158,8 +1158,42 @@ class MACD:
 		if 'permit' in GL_Results.columns:
 			if (
 				GL_Results['permit'][0] == True and
-				GL_Results['draw_down'][0] <= 7
+				GL_Results['draw_down'][0] <= 4
 				): 
+				return GL_Results
+
+			if (
+				GL_Results['st_percent_max'][0] <= 0.09 and
+				GL_Results['st_percent_min'][0] <= 0.08 and
+				GL_Results['tp_percent_max'][0] <= 0.27 and
+				GL_Results['tp_percent_min'][0] <= 0.24
+				):
+				path_elites = macd_config.cfg['path_elites'] + signalpriority + path_slash + signaltype + path_slash
+				learning_result = pd.read_csv(path_elites + symbol + '_LearningResults.csv').drop(columns='Unnamed: 0')
+				chromosome_output = pd.read_csv(path_elites + symbol + '_ChromosomeResults.csv').drop(columns='Unnamed: 0')
+
+				chromosome_output['st_percent_max'][0] = GL_Results['st_percent_max'][0]
+				chromosome_output['st_percent_min'][0] = GL_Results['st_percent_min'][0]
+				chromosome_output['tp_percent_max'][0] = GL_Results['tp_percent_max'][0]
+				chromosome_output['tp_percent_min'][0] = GL_Results['tp_percent_min'][0]
+				chromosome_output['score'][0] = GL_Results['score'][0]
+
+				return GL_Results
+
+			if (
+				GL_Results['score'][0] <= 20 and
+				GL_Results['permit'][0] == False
+				):
+				path_elites = macd_config.cfg['path_elites'] + signalpriority + path_slash + signaltype + path_slash
+				learning_result = pd.read_csv(path_elites + symbol + '_LearningResults.csv').drop(columns='Unnamed: 0')
+				chromosome_output = pd.read_csv(path_elites + symbol + '_ChromosomeResults.csv').drop(columns='Unnamed: 0')
+
+				chromosome_output['st_percent_max'][0] = GL_Results['st_percent_max'][0]
+				chromosome_output['st_percent_min'][0] = GL_Results['st_percent_min'][0]
+				chromosome_output['tp_percent_max'][0] = GL_Results['tp_percent_max'][0]
+				chromosome_output['tp_percent_min'][0] = GL_Results['tp_percent_min'][0]
+				chromosome_output['score'][0] = GL_Results['score'][0]
+
 				return GL_Results
 
 		try:
@@ -1607,7 +1641,7 @@ class MACD:
 
 		path_society = macd_config.cfg['path_society'] + signalpriority + path_slash + signaltype + path_slash + symbol + '.csv'
 
-		if os.path.exists(path_society): os.remove(path_society)
+		# if os.path.exists(path_society): os.remove(path_society)
 
 		chromosome, macd_parameters, ind_parameters, pr_parameters, pr_config = chrom.Get(
 																							work = 'BigBang',
@@ -2273,7 +2307,7 @@ class MACD:
 
 		#**************************** Best Find *********************************************************
 
-		if os.path.exists(path_society): os.remove(path_society)
+		# if os.path.exists(path_society): os.remove(path_society)
 		
 		#************ Finded:
 		# print(len(chromosome_output))
