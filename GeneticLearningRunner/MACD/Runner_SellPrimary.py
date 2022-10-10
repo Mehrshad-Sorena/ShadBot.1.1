@@ -67,7 +67,7 @@ def Run(number_data_5M):
 	optimizers.MacdOptimizer()
 
 	macd = MACD(parameters = parameters, config = config)
-
+ 
 	try:
 		# print(a)
 		macd_calc = macd.Genetic(
