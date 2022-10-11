@@ -115,8 +115,10 @@ class Divergence:
 			flagtest == False or
 			flaglearn == True
 			):
-
-			signal = signal.drop(signal.index[signal['diff_extereme'] >= self.elements[__class__.__name__ + '_diff_extereme']])
+			# print(sigtype, sigpriority, ' = ', self.elements[__class__.__name__ + '_diff_extereme'])
+			signal = signal.drop(signal.index[signal['diff_extereme'] < self.elements[__class__.__name__ + '_diff_extereme']])
+			# print(signal.iloc[-1])
+			# print()
 
 		signal = signal.drop_duplicates(subset = ['index'], keep='last', inplace=False, ignore_index=False).sort_values(by = ['index'])
 		signal = signal.set_index(signal['index'])
