@@ -1239,6 +1239,9 @@ class MACD:
 		# with pd.option_context('display.max_rows', None, 'display.max_columns', None):
 		# 	print('signals = ', signal_output)
 
+		# plt.plot(signal_output['money'])
+		# plt.show()
+
 		hour_st_0 = 0
 		hour_st_1 = 0
 		hour_st_2 = 0
