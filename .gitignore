@@ -111,3 +111,27 @@ src/utils/FeatureEngineering/Dataset/Lag/XAUUSD_i.csv
 src/utils/ForexNews/forexnews.json
 src/utils/ForexNews/Chorme Driver/Chorme Drivers/106/chromedriver_win32.zip
 src/utils/ForexNews/Chorme Driver/Chorme Drivers/106/chromedriver_win32/chromedriver.exe
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/primary/buy/ETHUSD_i_ChromosomeResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/primary/buy/ETHUSD_i_LearningResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/primary/buy/XAUUSD_i_ChromosomeResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/primary/buy/XAUUSD_i_LearningResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/primary/sell/ETHUSD_i_ChromosomeResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/primary/sell/ETHUSD_i_LearningResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/primary/sell/XAUUSD_i_ChromosomeResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/primary/sell/XAUUSD_i_LearningResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/secondry/buy/ETHUSD_i_ChromosomeResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/secondry/buy/ETHUSD_i_LearningResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/secondry/buy/XAUUSD_i_ChromosomeResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/secondry/buy/XAUUSD_i_LearningResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/secondry/sell/ETHUSD_i_ChromosomeResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/secondry/sell/ETHUSD_i_LearningResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/secondry/sell/XAUUSD_i_ChromosomeResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/elites/secondry/sell/XAUUSD_i_LearningResults.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/superhuman/primary/buy/ETHUSD_i.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/superhuman/primary/buy/XAUUSD_i.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/superhuman/primary/sell/ETHUSD_i.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/superhuman/primary/sell/XAUUSD_i.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/superhuman/secondry/buy/ETHUSD_i.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/superhuman/secondry/buy/XAUUSD_i.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/superhuman/secondry/sell/ETHUSD_i.csv
+src/indicators/MACD/GeneticLearning_DB/backUp/superhuman/secondry/sell/XAUUSD_i.csv
